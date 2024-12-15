@@ -20,7 +20,7 @@ Ensure the existence of customized `Create Entry` buttons for all data types. Tr
 a collection or taxonomy is missing the required translation key.
 
 ```php
-\Daun\StatamicUtils\ControlPanel\Translations\ensureCreateButtonLabels();
+\Daun\StatamicUtils\ControlPanel\Translations::ensureCreateButtonLabels();
 ```
 
 ## License
