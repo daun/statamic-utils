@@ -29,6 +29,15 @@ Return or find an asset by id or url.
 {{ image = image | asset }}
 ```
 
+### Count Safe
+
+Count the number of items in an array or iterable.
+Returns `0` for null values and `1` for non-iterable values.
+
+```antlers
+{{ if locations | count_safe }} ... {{ /if }}
+```
+
 ### Max
 
 Return the highest value in an array or collection.
