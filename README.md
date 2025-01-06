@@ -75,7 +75,7 @@ Push an item onto an array or collection.
 Wrap a value in an array if it is not already iterable.
 
 ```antlers
-Locations: {{ (locations ?? location) | make_iterable | pluck('title') | list }}
+Locations: {{ (locations ?? location) | to_iterable | pluck('title') | list }}
 ```
 
 ## Utilities
