@@ -14,8 +14,7 @@ class CountSafe extends Modifier
      * Count the number of items in an array or iterable.
      * Returns 0 for `null` values and 1 for non-array values.
      *
-     * @param mixed  $value    The array or iterable to be counted
-     *
+     * @param  mixed  $value  The array or iterable to be counted
      * @return int
      */
     public function index($value)

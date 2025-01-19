@@ -9,10 +9,8 @@ class P2Br extends Modifier
     /**
      * Convert paragraph tags to line breaks.
      *
-     * @param mixed  $value    The html string
-     * @param array  $params   Number of line breaks to replace each paragraph
-     *
-     * @return string
+     * @param  mixed  $value  The html string
+     * @param  array  $params  Number of line breaks to replace each paragraph
      */
     public function index($value, $params): string
     {
