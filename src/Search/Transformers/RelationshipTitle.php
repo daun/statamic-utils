@@ -17,7 +17,7 @@ class RelationshipTitle
 
         if ($items instanceof Collection) {
             return $items->map->get('title')->all();
-        } else if ($items instanceof Builder) {
+        } elseif ($items instanceof Builder) {
             return $items->get()->pluck('title');
         } else {
             return $items->title ?? null;
