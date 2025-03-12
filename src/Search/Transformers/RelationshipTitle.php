@@ -7,7 +7,7 @@ use Statamic\Contracts\Query\Builder;
 
 class RelationshipTitle
 {
-    public function handle($value, $field, $searchable)
+    public function handle($value, $field = null, $searchable = null)
     {
         if (! $value) {
             return null;
