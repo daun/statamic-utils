@@ -78,6 +78,45 @@ Wrap a value in an array if it is not already iterable.
 Locations: {{ (locations ?? location) | to_iterable | pluck('title') | list }}
 ```
 
+## Search Filters
+
+Classes for [filtering entries](https://statamic.dev/search#filtering-searchables) for search indexing.
+
+- `Published`: Filter out unpublished entries.
+- `All`: Include all entries, regardless of their published status.
+
+```php
+return [
+    'indexes' => [
+        'articles' => [
+            'searchables' => 'collection:articles',
+            'filter' => \Daun\StatamicUtils\Search\Filters\Published::class,
+        ]
+    ]
+];
+```
+
+## Search Transformers
+
+Classes for [transforming fields](https://statamic.dev/search#transforming-fields) for search indexing.
+
+- `BardText`: Extract [plain text](https://statamic.dev/modifiers/bard_text) from a Bard field.
+- `RelationshipTitle`: Map relationship fields to an array of titles.
+
+```php
+return [
+    'indexes' => [
+        'articles' => [
+            'searchables' => 'collection:articles',
+            'transformers' => [
+                'content' => \Daun\StatamicUtils\Search\Transformers\BardText::class,
+                'categories' => \Daun\StatamicUtils\Search\Transformers\RelationshipTitle::class,
+            ]
+        ]
+    ]
+];
+```
+
 ## Utilities
 
 ### Control Panel
