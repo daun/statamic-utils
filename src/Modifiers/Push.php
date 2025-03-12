@@ -12,16 +12,15 @@ class Push extends Modifier
      *
      * @example {{ items = (items | push:{newitem}) }}
      *
-     * @param mixed  $value    The array or collection to modify
-     * @param array  $params   The items to push
-     *
+     * @param  mixed  $value  The array or collection to modify
+     * @param  array  $params  The items to push
      * @return mixed
      */
     public function index($value, $params)
     {
         if (is_array($value)) {
             array_push($value, ...$params);
-        } else if ($value instanceof Collection) {
+        } elseif ($value instanceof Collection) {
             $value->push(...$params);
         }
 

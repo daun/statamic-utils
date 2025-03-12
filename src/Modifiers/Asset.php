@@ -11,13 +11,12 @@ class Asset extends Modifier
     /**
      * Return or find an asset by id or url.
      *
-     * @param mixed  $value  The asset id/url or potential Asset object
-     *
+     * @param  mixed  $value  The asset id/url or potential Asset object
      * @return Statamic\Contracts\Assets\Asset|null
      */
     public function index($value): ?AssetContract
     {
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
