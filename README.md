@@ -78,6 +78,18 @@ Wrap a value in an array if it is not already iterable.
 Locations: {{ (locations ?? location) | to_iterable | pluck('title') | list }}
 ```
 
+## Query Scopes
+
+Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
+
+- `Published`: Filter out unpublished entries
+- `Image`: Filter assets that are images (pixel + vector)
+- `ImagePixel`: Filter assets that are pixel images (jpeg, png, gif, etc)
+- `ImageVector`: Filter assets that are vector images (svg)
+- `ImageOrVideo`: Filter assets that are images or videos
+- `Video`: Filter assets that are video files
+- `Audio`: Filter assets that are audio files
+
 ## Search Filters
 
 Classes for [filtering entries](https://statamic.dev/search#filtering-searchables) for search indexing.
