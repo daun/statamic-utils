@@ -10,6 +10,21 @@ Install the package via composer:
 composer require daun/statamic-utils
 ```
 
+## Registration
+
+Modifiers, Tags, Scopes, etc. need to be registered in your Statamic addon service provider.
+
+```php
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        \Daun\StatamicUtils\Modifiers\ToIterable::register();
+        \Daun\StatamicUtils\Scopes\Image::register();
+    }
+}
+```
+
 ## Modifiers
 
 ### Is String
@@ -77,6 +92,18 @@ Wrap a value in an array if it is not already iterable.
 ```antlers
 Locations: {{ (locations ?? location) | to_iterable | pluck('title') | list }}
 ```
+
+## Query Scopes
+
+Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
+
+- `Published`: Filter out unpublished entries
+- `Image`: Filter assets that are images (pixel + vector)
+- `ImagePixel`: Filter assets that are pixel images (jpeg, png, gif, etc)
+- `ImageVector`: Filter assets that are vector images (svg)
+- `ImageOrVideo`: Filter assets that are images or videos
+- `Video`: Filter assets that are video files
+- `Audio`: Filter assets that are audio files
 
 ## Search Filters
 
