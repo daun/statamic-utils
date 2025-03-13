@@ -10,6 +10,21 @@ Install the package via composer:
 composer require daun/statamic-utils
 ```
 
+## Registration
+
+Modifiers, Tags, Scopes, etc. need to be registered in your Statamic addon service provider.
+
+```php
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot(): void
+    {
+        \Daun\StatamicUtils\Modifiers\ToIterable::register();
+        \Daun\StatamicUtils\Scopes\Image::register();
+    }
+}
+```
+
 ## Modifiers
 
 ### Is String
