@@ -12,7 +12,7 @@ composer require daun/statamic-utils
 
 ## Registration
 
-Modifiers, Tags, Scopes, etc. need to be registered in your Statamic addon service provider.
+Modifiers, Tags, Scopes, etc. need to be registered in your app's service provider.
 
 ```php
 class AppServiceProvider extends ServiceProvider
