@@ -1,0 +1,62 @@
+<?php
+
+namespace Daun\StatamicUtils\Cache;
+
+class QueryParams {
+    public static function toIgnore(): array
+    {
+        return [
+            '_token',
+            '_bta_c',
+            '_bta_tid',
+            '_ga',
+            '_gl',
+            '_ke',
+            '_kx',
+            'adgroupid',
+            'adid',
+            'adt_ei',
+            'age-verified',
+            'ao_noptimize',
+            'campaignid',
+            'ck_subscriber_id',
+            'cn-reloaded',
+            'dclid',
+            'sh_kit',
+            'epik',
+            'fb_action_ids',
+            'fb_action_types',
+            'fb_source',
+            'fbclid',
+            'gbraid',
+            'gclid',
+            'gclsrc',
+            'gdffi',
+            'gdfms',
+            'gdftrk',
+            'mc_cid',
+            'mc_eid',
+            'mkt_tok',
+            'mkwid',
+            'msclkid',
+            'pcrid',
+            'pp',
+            'ref',
+            's_kwcid',
+            'sscid',
+            'usqp',
+            'utm_campaign',
+            'utm_content',
+            'utm_creative_format',
+            'utm_expid',
+            'utm_id',
+            'utm_marketing_tactic',
+            'utm_medium',
+            'utm_source',
+            'utm_source_platform',
+            'utm_term',
+            'vgo_ee',
+            'wbraid',
+        ];
+    }
+}
