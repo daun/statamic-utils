@@ -167,6 +167,20 @@ An optional `when` parameter will only render and capture the output if the cond
 {{ /capture:contents }}
 ```
 
+### Icon
+
+Render an SVG icon from an existing sprite map.
+
+```antlers
+{{ icon:search }}
+```
+
+```html
+<svg class="icon icon-search" preserveAspectRatio="xMinYMid" aria-hidden="true">
+    <use xlink:href="#icon-search">
+</svg>
+```
+
 ## Query Scopes
 
 Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
