@@ -114,6 +114,22 @@ field values in combination with `nocache` tags to avoid serialization issues.
 {{ partial:partials/data-table :rows="news | resolve" }}
 ```
 
+### To Int
+
+Convert a value to an integer. Special case: converts a mixed array to an array of integers.
+
+```antlers
+{{ number_array = mixed_array | to_int }}
+```
+
+### To Float
+
+Convert a value to a float. Special case: converts a mixed array to an array of floats.
+
+```antlers
+{{ number_array = mixed_array | to_float }}
+```
+
 ### To Iterable
 
 Wrap a value in an array if it is not already iterable.
