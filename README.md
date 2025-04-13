@@ -27,14 +27,6 @@ class AppServiceProvider extends ServiceProvider
 
 ## Modifiers
 
-### Is String
-
-Check if a value is a string.
-
-```antlers
-{{ if some_var | is_string }}
-```
-
 ### Asset
 
 Return or find an asset by id or url.
@@ -51,6 +43,34 @@ Returns `0` for null values and `1` for non-iterable values.
 
 ```antlers
 {{ if locations | count_safe }} ... {{ /if }}
+```
+
+### Except
+
+Remove keys from an array or collection.
+
+```antlers
+{{ params = get | except('page', 'q') }}
+```
+
+### Is Current
+
+Check if the current page matches the given URL. Pass `true` to also include ancestors in the comparison.
+
+```antlers
+{{ if url | is_current }}
+    aria-current="page"
+{{ elseif url | is_current(true) }}
+    aria-current="true"
+{{ /if }}
+```
+
+### Is String
+
+Check if a value is a string.
+
+```antlers
+{{ if some_var | is_string }}
 ```
 
 ### Max
@@ -85,6 +105,15 @@ Push an item onto an array or collection.
 {{ items = (items | push:{newitem}) }}
 ```
 
+### Resolve
+
+Resolves unfetched query builder queries to their results. Useful when passing around entries
+field values in combination with `nocache` tags to avoid serialization issues.
+
+```antlers
+{{ partial:partials/data-table :rows="news | resolve" }}
+```
+
 ### To Int
 
 Convert a value to an integer. Special case: converts a mixed array to an array of integers.
@@ -107,6 +136,63 @@ Wrap a value in an array if it is not already iterable.
 
 ```antlers
 Locations: {{ (locations ?? location) | to_iterable | pluck('title') | list }}
+```
+
+## Tags
+
+### Capture
+
+Capture the output of a template section and assign it to a variable. Similar to assigning the output
+of a partial view to a variable, but without the need for an actual partial file.
+
+```antlers
+{{ capture:contents }}
+    Any output inside of this will land in the `contents` variable.
+{{ /capture:contents }}
+```
+
+An optional `trim` parameter will trim the output of whitespace.
+
+```antlers
+{{ capture:contents trim="true" }}
+    {{ title }}
+{{ /capture:contents }}
+```
+
+An optional `when` parameter will only render and capture the output if the condition is met.
+
+```antlers
+{{ capture:contents :when="count >= 1" }}
+    Found {{ count }} results
+{{ /capture:contents }}
+```
+
+### Icon
+
+Render an SVG icon from an existing sprite map.
+
+```antlers
+{{ icon:search }}
+```
+
+```html
+<svg class="icon icon-search" preserveAspectRatio="xMinYMid" aria-hidden="true">
+    <use xlink:href="#icon-search">
+</svg>
+```
+
+### IfContent
+
+Render a block of content only if it is not empty, i.e. if it contains actual text content. A block
+of content containing only whitespace or empty tags will not be rendered.
+
+```antlers
+{{ if_content }}
+    <ul>
+        {{ categories }} <li>{{ title }}</li> {{ /categories }}
+        {{ tags }} <li>{{ title }}</li> {{ /tags }}
+    </ul>
+{{ /if_content }}
 ```
 
 ## Query Scopes
