@@ -12,7 +12,7 @@ composer require daun/statamic-utils
 
 ## Registration
 
-Modifiers, Tags, Scopes, etc. need to be registered in your Statamic addon service provider.
+Modifiers, Tags, Scopes, etc. need to be registered in your app's service provider.
 
 ```php
 class AppServiceProvider extends ServiceProvider
@@ -26,14 +26,6 @@ class AppServiceProvider extends ServiceProvider
 ```
 
 ## Modifiers
-
-### Is String
-
-Check if a value is a string.
-
-```antlers
-{{ if some_var | is_string }}
-```
 
 ### Asset
 
@@ -71,6 +63,14 @@ Check if the current page matches the given URL. Pass `true` to also include anc
 {{ elseif url | is_current(true) }}
     aria-current="true"
 {{ /if }}
+```
+
+### Is String
+
+Check if a value is a string.
+
+```antlers
+{{ if some_var | is_string }}
 ```
 
 ### Max
