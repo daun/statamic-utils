@@ -2,9 +2,14 @@
 
 All notable changes to this package will be documented in this file.
 
+## [1.6.0] - 2025-04-13
+
+- Add tags
+- Add modifiers
+
 ## [1.5.0] - 2025-03-14
 
-- Add int and float modifiers
+- Add modifiers
 
 ## [1.4.0] - 2025-03-13
 
@@ -26,6 +31,7 @@ All notable changes to this package will be documented in this file.
 
 - Initial release
 
+[1.6.0]: https://github.com/daun/statamic-utils/releases/tag/1.6.0
 [1.5.0]: https://github.com/daun/statamic-utils/releases/tag/1.5.0
 [1.4.0]: https://github.com/daun/statamic-utils/releases/tag/1.4.0
 [1.3.0]: https://github.com/daun/statamic-utils/releases/tag/1.3.0
