@@ -181,6 +181,20 @@ Render an SVG icon from an existing sprite map.
 </svg>
 ```
 
+### IfContent
+
+Render a block of content only if it is not empty, i.e. if it contains actual text content. A block
+of content containing only whitespace or empty tags will not be rendered.
+
+```antlers
+{{ if_content }}
+    <ul>
+        {{ categories }} <li>{{ title }}</li> {{ /categories }}
+        {{ tags }} <li>{{ title }}</li> {{ /tags }}
+    </ul>
+{{ /if_content }}
+```
+
 ## Query Scopes
 
 Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
