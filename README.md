@@ -85,6 +85,15 @@ Push an item onto an array or collection.
 {{ items = (items | push:{newitem}) }}
 ```
 
+### Resolve
+
+Resolves unfetched query builder queries to their results. Useful when passing around entries
+field values in combination with `nocache` tags to avoid serialization issues.
+
+```antlers
+{{ partial:partials/data-table :rows="news | resolve" }}
+```
+
 ### To Iterable
 
 Wrap a value in an array if it is not already iterable.
