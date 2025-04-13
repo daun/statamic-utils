@@ -61,6 +61,18 @@ Remove keys from an array or collection.
 {{ params = get | except('page', 'q') }}
 ```
 
+### Is Current
+
+Check if the current page matches the given URL. Pass `true` to also include ancestors in the comparison.
+
+```antlers
+{{ if url | is_current }}
+    aria-current="page"
+{{ elseif url | is_current(true) }}
+    aria-current="true"
+{{ /if }}
+```
+
 ### Max
 
 Return the highest value in an array or collection.
