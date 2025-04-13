@@ -53,6 +53,14 @@ Returns `0` for null values and `1` for non-iterable values.
 {{ if locations | count_safe }} ... {{ /if }}
 ```
 
+### Except
+
+Remove keys from an array or collection.
+
+```antlers
+{{ params = get | except('page', 'q') }}
+```
+
 ### Max
 
 Return the highest value in an array or collection.
