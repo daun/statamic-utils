@@ -138,6 +138,35 @@ Wrap a value in an array if it is not already iterable.
 Locations: {{ (locations ?? location) | to_iterable | pluck('title') | list }}
 ```
 
+## Tags
+
+### Capture
+
+Capture the output of a template section and assign it to a variable. Similar to assigning the output
+of a partial view to a variable, but without the need for an actual partial file.
+
+```antlers
+{{ capture:contents }}
+    Any output inside of this will land in the `contents` variable.
+{{ /capture:contents }}
+```
+
+An optional `trim` parameter will trim the output of whitespace.
+
+```antlers
+{{ capture:contents trim="true" }}
+    {{ title }}
+{{ /capture:contents }}
+```
+
+An optional `when` parameter will only render and capture the output if the condition is met.
+
+```antlers
+{{ capture:contents :when="count >= 1" }}
+    Found {{ count }} results
+{{ /capture:contents }}
+```
+
 ## Query Scopes
 
 Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
