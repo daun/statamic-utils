@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## [1.7.0] - 2025-06-20
+
+- Support Laravel 12
+
 ## [1.6.0] - 2025-04-13
 
 - Add tags
@@ -31,6 +35,7 @@ All notable changes to this package will be documented in this file.
 
 - Initial release
 
+[1.7.0]: https://github.com/daun/statamic-utils/releases/tag/1.7.0
 [1.6.0]: https://github.com/daun/statamic-utils/releases/tag/1.6.0
 [1.5.0]: https://github.com/daun/statamic-utils/releases/tag/1.5.0
 [1.4.0]: https://github.com/daun/statamic-utils/releases/tag/1.4.0
