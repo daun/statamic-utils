@@ -36,6 +36,14 @@ Return or find an asset by id or url.
 {{ image = image | asset }}
 ```
 
+### Br 2 Nl
+
+Strip tags, but keep line breaks as visually intended by the html.
+
+```antlers
+<p>{{ rich_text | br2nl }}</p>
+```
+
 ### Count Safe
 
 Count the number of items in an array or iterable.
