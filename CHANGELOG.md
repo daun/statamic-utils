@@ -2,6 +2,12 @@
 
 All notable changes to this package will be documented in this file.
 
+## [1.8.0] - 2025-07-06
+
+- Add `br2nl` modifier
+- Add `nl2str` modifier
+- Simplify `p2br` modifier
+
 ## [1.7.0] - 2025-06-20
 
 - Support Laravel 12
