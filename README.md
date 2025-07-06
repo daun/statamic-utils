@@ -89,6 +89,14 @@ Return the lowest value in an array or collection.
 {{ small = sizes | min }}
 ```
 
+### Nl 2 Str
+
+Replace newlines with a specified string.
+
+```antlers
+<p>{{ rich_text | nl2str(', ') }}</p>
+```
+
 ### P 2 Br
 
 Convert paragraph tags to line breaks.
