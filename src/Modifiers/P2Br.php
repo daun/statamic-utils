@@ -14,16 +14,15 @@ class P2Br extends Modifier
      */
     public function index($value, $params): string
     {
-        $numBreaks = $params[0] ?? 2;
-
         $html = (string) $value;
+        $numBreaks = $params[0] ?? 2;
+        if (! str_contains($html, '<p')) return $html;
 
-        if (stripos($html, '<p') === false) {
-            return $html;
-        }
+        return $this->p2br($html, $numBreaks);
+    }
 
-        $breaks = str_repeat('<br />', $numBreaks);
-
+    protected function p2br(string $html, int $numBreaks = 2): string
+    {
         // Remove opening <p> tags
         $html = preg_replace('#<p[^>]*?>#', '', $html);
 
@@ -31,6 +30,7 @@ class P2Br extends Modifier
         $html = preg_replace('#</p>$#', '', $html);
 
         // Replace each end of paragraph with two <br />
+        $breaks = str_repeat('<br />', $numBreaks);
         $html = str_replace('</p>', $breaks, $html);
 
         return $html;
