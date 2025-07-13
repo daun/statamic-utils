@@ -2,6 +2,11 @@
 
 All notable changes to this package will be documented in this file.
 
+## [1.9.0] - 2025-07-13
+
+- Add data resolver for value objects
+- Use internal translation helper
+
 ## [1.8.0] - 2025-07-06
 
 - Add `br2nl` modifier
@@ -41,6 +46,8 @@ All notable changes to this package will be documented in this file.
 
 - Initial release
 
+[1.9.0]: https://github.com/daun/statamic-utils/releases/tag/1.9.0
+[1.8.0]: https://github.com/daun/statamic-utils/releases/tag/1.8.0
 [1.7.0]: https://github.com/daun/statamic-utils/releases/tag/1.7.0
 [1.6.0]: https://github.com/daun/statamic-utils/releases/tag/1.6.0
 [1.5.0]: https://github.com/daun/statamic-utils/releases/tag/1.5.0
