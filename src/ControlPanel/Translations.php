@@ -5,6 +5,8 @@ namespace Daun\StatamicUtils\ControlPanel;
 use Statamic\Facades\Collection as Collections;
 use Statamic\Facades\Taxonomy as Taxonomies;
 
+use function Statamic\trans as __;
+
 class Translations
 {
     /**
@@ -19,7 +21,7 @@ class Translations
             ->map(fn ($taxonomy) => "messages.{$taxonomy->handle()}_taxonomy_create_term");
 
         $collections->concat($taxonomies)->each(function ($key) {
-            if (trans($key) === $key) {
+            if (__($key) === $key) {
                 throw new \Exception("Missing translation key: {$key}");
             }
         });
