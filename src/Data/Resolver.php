@@ -2,8 +2,7 @@
 
 namespace Daun\StatamicUtils\Data;
 
-use Illuminate\Database\Query\Builder as BaseQueryBuilder;
-use Statamic\Contracts\Query\Builder as StatamicQueryBuilder;
+use Statamic\Facades\Compare;
 use Statamic\Fields\ArrayableString;
 use Statamic\Fields\LabeledValue;
 use Statamic\Fields\Value;
@@ -27,10 +26,7 @@ class Resolver {
             if ($value instanceof ArrayableString) {
                 $value = $value->__toString();
             }
-            if ($value instanceof BaseQueryBuilder) {
-                $value = $value->get();
-            }
-            if ($value instanceof StatamicQueryBuilder) {
+            if (Compare::isQueryBuilder($value)) {
                 $value = $value->get();
             }
             if ($value instanceof FluentTag) {
