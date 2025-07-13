@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 1.9.1 - 2025-07-13
+
+- Use internal query builder check
+
 ## 1.9.0 - 2025-07-13
 
 - Add data resolver for value objects
