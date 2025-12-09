@@ -211,6 +211,12 @@ of content containing only whitespace or empty tags will not be rendered.
 {{ /if_content }}
 ```
 
+## Actions
+
+### Edit Collection Mount
+
+Redirect to the edit form of a collection's mount page from its entry listing view.
+
 ## Query Scopes
 
 Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
