@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## Unreleased
+
+- Add actions for jumping between mount pages and their entries
+
 ## 1.9.1 - 2025-07-13
 
 - Use internal query builder check
