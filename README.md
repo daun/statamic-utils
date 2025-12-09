@@ -217,6 +217,10 @@ of content containing only whitespace or empty tags will not be rendered.
 
 Redirect to the edit form of a collection's mount page from its entry listing view.
 
+### Show Mount Entries
+
+Redirect to the entry listing view of a collection's mount page from its entry edit view.
+
 ## Query Scopes
 
 Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
