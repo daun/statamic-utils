@@ -2,9 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
-## Unreleased
+## 1.10.0 - 2025-12-22
 
 - Add actions for jumping between mount pages and their entries
+- Add `repeat` tag
 
 ## 1.9.1 - 2025-07-13
 
