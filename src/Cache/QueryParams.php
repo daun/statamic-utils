@@ -2,7 +2,8 @@
 
 namespace Daun\StatamicUtils\Cache;
 
-class QueryParams {
+class QueryParams
+{
     public static function toIgnore(): array
     {
         return [

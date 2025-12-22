@@ -16,7 +16,9 @@ class P2Br extends Modifier
     {
         $html = (string) $value;
         $numBreaks = $params[0] ?? 2;
-        if (! str_contains($html, '<p')) return $html;
+        if (! str_contains($html, '<p')) {
+            return $html;
+        }
 
         return $this->p2br($html, $numBreaks);
     }

@@ -10,7 +10,8 @@ use Statamic\Fields\Values;
 use Statamic\Modifiers\Modify;
 use Statamic\Tags\FluentTag;
 
-class Resolver {
+class Resolver
+{
     public static function actual(...$values): mixed
     {
         foreach ($values as $value) {
