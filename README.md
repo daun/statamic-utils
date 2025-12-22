@@ -211,6 +211,16 @@ of content containing only whitespace or empty tags will not be rendered.
 {{ /if_content }}
 ```
 
+### Repeat
+
+Render the contained content a specified number of times.
+
+```antlers
+{{ repeat times="3" }}
+    <p>This paragraph will be repeated 3 times.</p>
+{{ /repeat }}
+```
+
 ## Actions
 
 ### Edit Collection Mount
