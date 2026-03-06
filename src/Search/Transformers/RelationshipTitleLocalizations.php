@@ -30,9 +30,9 @@ class RelationshipTitleLocalizations extends RelationshipTitle
 
         return match (true) {
             $item instanceof Collection => $item->map($this->localizations(...))->flatten(),
-            $item instanceof Entry => $locales->map(fn($locale) => $item->in($locale)),
-            $item instanceof Term => $locales->map(fn($locale) => $item->in($locale)),
-            $item instanceof LocalizedTerm => $locales->map(fn($locale) => $item->in($locale)),
+            $item instanceof Entry => $locales->map(fn ($locale) => $item->in($locale)),
+            $item instanceof Term => $locales->map(fn ($locale) => $item->in($locale)),
+            $item instanceof LocalizedTerm => $locales->map(fn ($locale) => $item->in($locale)),
             default => collect($item),
         };
     }

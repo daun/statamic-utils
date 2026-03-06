@@ -16,8 +16,8 @@ class RelationshipTitle
         $items = $this->augment($searchable, $field);
 
         $value = match (true) {
-             $items instanceof Collection => $items->map($this->title(...))->filter()->values()->all(),
-             default => Arr::wrap($this->title($items)),
+            $items instanceof Collection => $items->map($this->title(...))->filter()->values()->all(),
+            default => Arr::wrap($this->title($items)),
         };
 
         return [$field => $value];
@@ -35,10 +35,10 @@ class RelationshipTitle
     public function title($item)
     {
         return match (true) {
-             $item instanceof Entry => $item->value('title'),
-             $item instanceof Term => $item->value('title'),
-             $item instanceof LocalizedTerm => $item->value('title'),
-             default => $item->title ?? null,
+            $item instanceof Entry => $item->value('title'),
+            $item instanceof Term => $item->value('title'),
+            $item instanceof LocalizedTerm => $item->value('title'),
+            default => $item->title ?? null,
         };
     }
 }
