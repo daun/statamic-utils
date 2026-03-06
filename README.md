@@ -169,6 +169,17 @@ Wrap a value in an array if it is not already iterable.
 Locations: {{ (locations ?? location) | to_iterable | pluck('title') | list }}
 ```
 
+### Wrap Words
+
+Wrap each word in a `<span>` tag. Use the optional first parameter to specify a different wrapper tag.
+
+```antlers
+<p>{{ title | wrap_words }}</p>
+<ul>
+  {{ title | wrap_words('li') }}
+</ul>
+```
+
 ## Tags
 
 ### Capture
