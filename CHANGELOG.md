@@ -2,6 +2,14 @@
 
 All notable changes to this package will be documented in this file.
 
+## 1.11.0 - 2026-03-06
+
+- Add `wrap_words` modifier
+- Add `orientation` modifier
+- Add `standard_ratio` modifier
+- Improve relation title search transformer
+- Add localized relation title search transformer
+
 ## 1.10.0 - 2025-12-22
 
 - Add actions for jumping between mount pages and their entries
