@@ -8,7 +8,7 @@ use Statamic\Facades\Site as Sites;
 use Statamic\Taxonomies\LocalizedTerm;
 use Statamic\Taxonomies\Term;
 
-class MultiLanguageRelationshipTitle extends RelationshipTitle
+class RelationshipTitleLocalizations extends RelationshipTitle
 {
     public function handle($value, $field = null, $searchable = null)
     {

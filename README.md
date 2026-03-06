@@ -292,7 +292,8 @@ return [
 Classes for [transforming fields](https://statamic.dev/search#transforming-fields) for search indexing.
 
 - `BardText`: Extract [plain text](https://statamic.dev/modifiers/bard_text) from a Bard field.
-- `RelationshipTitle`: Map relationship fields to an array of titles.
+- `RelationshipTitle`: Return an array of titles of all relationships (entries, terms, etc)
+- `RelationshipTitleLocalizations`: Return an array of relationship titles in all languages
 
 ```php
 return [
