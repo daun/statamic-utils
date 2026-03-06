@@ -107,14 +107,14 @@ Replace newlines with a specified string.
 
 ### Orientation
 
-Determine the orientation of an image or video asset. Returns `portrait`, `landscape`, or `square`.
+Determine the orientation of an aspect ratio value. Returns `portrait`, `landscape`, or `square`.
 
 ```antlers
-{{ orientation = asset | orientation }}
+{{ orientation = asset:ratio | orientation }}
 ```
 
-Images are considered square if their aspect ratio is within 5% of 1:1. Use the optional first
-parameter to specify a custom threshold, e.g. `1.25` for a 25% tolerance or `1.0` for a strict 1:1 ratio.
+A ratio is considered square if it is within 5% of 1:1. Use the optional first parameter to specify
+a custom threshold, e.g. `1.25` for a 25% tolerance or `1.0` for a strict 1:1 ratio.
 
 ```antlers
 {{ orientation = image | orientation(1.25) }}
