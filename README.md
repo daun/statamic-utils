@@ -105,6 +105,21 @@ Replace newlines with a specified string.
 <p>{{ rich_text | nl2str(', ') }}</p>
 ```
 
+### Orientation
+
+Determine the orientation of an image or video asset. Returns `portrait`, `landscape`, or `square`.
+
+```antlers
+{{ orientation = asset | orientation }}
+```
+
+Images are considered square if their aspect ratio is within 5% of 1:1. Use the optional first
+parameter to specify a custom threshold, e.g. `1.25` for a 25% tolerance or `1.0` for a strict 1:1 ratio.
+
+```antlers
+{{ orientation = image | orientation(1.25) }}
+```
+
 ### P 2 Br
 
 Convert paragraph tags to line breaks.
