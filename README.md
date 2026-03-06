@@ -145,6 +145,20 @@ field values in combination with `nocache` tags to avoid serialization issues.
 {{ partial:partials/data-table :rows="news | resolve" }}
 ```
 
+### Standard Ratio
+
+Map an aspect ratio value to its closest equivalent in a predefined set of standard ratios.
+
+```antlers
+{{ ratio = asset:ratio | standard_ratio }}
+```
+
+Default ratios are 1:1, 4:3, 3:2, 16:9 and their inverses. You can globally define custom ratios:
+
+```php
+\Daun\StatamicUtils\Modifiers\StandardRatio::define(['5/4', '4/5']);
+```
+
 ### To Int
 
 Convert a value to an integer. Special case: converts a mixed array to an array of integers.
