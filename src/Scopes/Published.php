@@ -2,6 +2,7 @@
 
 namespace Daun\StatamicUtils\Scopes;
 
+use Statamic\Query\Builder;
 use Statamic\Query\Scopes\Scope;
 
 class Published extends Scope
@@ -9,7 +10,7 @@ class Published extends Scope
     /**
      * Apply the scope.
      *
-     * @param  \Statamic\Query\Builder  $query
+     * @param  Builder  $query
      * @param  array  $values
      * @return void
      */
