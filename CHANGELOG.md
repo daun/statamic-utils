@@ -2,6 +2,11 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.0.0 - 2026-06-18
+
+- Fix duplicate parsing in repeat tag
+- Require PHP 8.4
+
 ## 2.1.0 - 2026-06-18
 
 - Add rate-limited email job
