@@ -2,6 +2,11 @@
 
 All notable changes to this package will be documented in this file.
 
+## 2.1.0 - 2026-06-18
+
+- Add rate-limited email job
+- Remove `is_string` modifier now part of core
+
 ## 2.0.0 - 2026-06-17
 
 - Support Statamic 6
