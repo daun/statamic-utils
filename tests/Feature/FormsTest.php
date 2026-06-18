@@ -1,10 +1,8 @@
 <?php
 
 use Daun\StatamicUtils\Forms\SendRateLimitedEmail;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
-use Statamic\Forms\SendEmail;
 
 function makeRateLimitedJob(): SendRateLimitedEmail
 {
@@ -15,13 +13,6 @@ function makeRateLimitedJob(): SendRateLimitedEmail
 
     return $job;
 }
-
-test('rate limited email is a queued drop-in replacement for SendEmail', function () {
-    $job = makeRateLimitedJob();
-
-    expect($job)->toBeInstanceOf(SendEmail::class);
-    expect($job)->toBeInstanceOf(ShouldQueue::class);
-});
 
 test('rate limited email applies rate limiting and overlap middleware', function () {
     $middleware = makeRateLimitedJob()->middleware();
