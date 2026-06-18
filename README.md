@@ -73,14 +73,6 @@ Check if the current page matches the given URL. Pass `true` to also include anc
 {{ /if }}
 ```
 
-### Is String
-
-Check if a value is a string.
-
-```antlers
-{{ if some_var | is_string }}
-```
-
 ### Max
 
 Return the highest value in an array or collection.
