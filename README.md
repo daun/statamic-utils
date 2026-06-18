@@ -73,14 +73,6 @@ Check if the current page matches the given URL. Pass `true` to also include anc
 {{ /if }}
 ```
 
-### Is String
-
-Check if a value is a string.
-
-```antlers
-{{ if some_var | is_string }}
-```
-
 ### Max
 
 Return the highest value in an array or collection.
@@ -320,6 +312,20 @@ return [
             ]
         ]
     ]
+];
+```
+
+## Forms
+
+### SendRateLimitedEmail
+
+A job that sends form submission emails with a rate limit of 1 per second. It extends/wraps the
+default `SendEmail` job and can be used as a drop-in replacement with otherwise identical behavior.
+
+```php
+// config/statamic/forms.php
+return [
+    'send_email_job' => \Daun\StatamicUtils\Forms\SendRateLimitedEmail::class,
 ];
 ```
 
