@@ -332,6 +332,27 @@ test('qr_code returns null for empty or non-string values', function () {
 
 /*
 |--------------------------------------------------------------------------
+| Query Append
+|--------------------------------------------------------------------------
+*/
+
+test('query_append adds a query string with a question mark', function () {
+    expect((new Modifiers\QueryAppend)->index('https://example.com', ['a=1'], []))
+        ->toBe('https://example.com?a=1');
+});
+
+test('query_append uses an ampersand when a query already exists', function () {
+    expect((new Modifiers\QueryAppend)->index('https://example.com?a=1', ['b=2'], []))
+        ->toBe('https://example.com?a=1&b=2');
+});
+
+test('query_append returns the value unchanged when no query is given', function () {
+    expect((new Modifiers\QueryAppend)->index('https://example.com', [], []))
+        ->toBe('https://example.com');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Resolve
 |--------------------------------------------------------------------------
 */

@@ -159,6 +159,15 @@ Return a QR code image URL (SVG) for a given URL or phone number, generated via 
 <img src="{{ url | qr_code }}" alt="QR code">
 ```
 
+### Query Append
+
+Append a query string to a URL, using `?` or `&` as appropriate depending on whether the URL already
+contains a query string.
+
+```antlers
+{{ url | query_append('utm_source=newsletter') }}
+```
+
 ### Resolve
 
 Resolves unfetched query builder queries to their results. Useful when passing around entries
