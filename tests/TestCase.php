@@ -51,6 +51,7 @@ abstract class TestCase extends BaseTestCase
         Modifiers\Br2Nl::register();
         Modifiers\CountSafe::register();
         Modifiers\Except::register();
+        Modifiers\Hostname::register();
         Modifiers\IsCurrent::register();
         Modifiers\Max::register();
         Modifiers\Min::register();

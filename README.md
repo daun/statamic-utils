@@ -61,6 +61,14 @@ Remove keys from an array or collection.
 {{ params = get | except('page', 'q') }}
 ```
 
+### Hostname
+
+Extract the hostname from a URL, stripping a leading `www.`. Non-URL values return `null`.
+
+```antlers
+{{ 'https://www.example.com/path' | hostname }} {{# example.com #}}
+```
+
 ### Is Current
 
 Check if the current page matches the given URL. Pass `true` to also include ancestors in the comparison.

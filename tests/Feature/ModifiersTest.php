@@ -107,6 +107,25 @@ test('except keeps collections as collections', function () {
 
 /*
 |--------------------------------------------------------------------------
+| Hostname
+|--------------------------------------------------------------------------
+*/
+
+test('hostname extracts the host from a url', function () {
+    expect((new Modifiers\Hostname)->index('https://example.com/path', [], []))->toBe('example.com');
+});
+
+test('hostname strips a leading www.', function () {
+    expect((new Modifiers\Hostname)->index('https://www.example.com', [], []))->toBe('example.com');
+});
+
+test('hostname returns non-url values as null', function () {
+    expect((new Modifiers\Hostname)->index('not a url', [], []))->toBe(null);
+    expect((new Modifiers\Hostname)->index(42, [], []))->toBe(null);
+});
+
+/*
+|--------------------------------------------------------------------------
 | Is Current
 |--------------------------------------------------------------------------
 */
