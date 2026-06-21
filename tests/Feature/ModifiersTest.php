@@ -313,6 +313,25 @@ test('push appends an item to a collection', function () {
 
 /*
 |--------------------------------------------------------------------------
+| Qr Code
+|--------------------------------------------------------------------------
+*/
+
+test('qr_code returns a qr image url for a string', function () {
+    $result = (new Modifiers\QrCode)->index('https://example.com', [], []);
+
+    expect($result)->toContain('https://quickchart.io/qr?text=');
+    expect($result)->toContain(urlencode('https://example.com'));
+});
+
+test('qr_code returns null for empty or non-string values', function () {
+    expect((new Modifiers\QrCode)->index(null, [], []))->toBeNull();
+    expect((new Modifiers\QrCode)->index('', [], []))->toBeNull();
+    expect((new Modifiers\QrCode)->index(42, [], []))->toBeNull();
+});
+
+/*
+|--------------------------------------------------------------------------
 | Resolve
 |--------------------------------------------------------------------------
 */

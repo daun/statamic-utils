@@ -151,6 +151,14 @@ Push an item onto an array or collection.
 {{ items = (items | push:{newitem}) }}
 ```
 
+### Qr Code
+
+Return a QR code image URL (SVG) for a given URL or phone number, generated via [quickchart.io](https://quickchart.io/).
+
+```antlers
+<img src="{{ url | qr_code }}" alt="QR code">
+```
+
 ### Resolve
 
 Resolves unfetched query builder queries to their results. Useful when passing around entries

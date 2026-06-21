@@ -60,6 +60,7 @@ abstract class TestCase extends BaseTestCase
         Modifiers\Orientation::register();
         Modifiers\P2Br::register();
         Modifiers\Push::register();
+        Modifiers\QrCode::register();
         Modifiers\Resolve::register();
         Modifiers\StandardRatio::register();
         Modifiers\ToFloat::register();
