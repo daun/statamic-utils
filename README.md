@@ -36,6 +36,21 @@ Return or find an asset by id or url.
 {{ image = image | asset }}
 ```
 
+### Asset Meta
+
+Get an asset's meta value by key, iterating over possible locales. Falls back to the unsuffixed key
+if no localized value is found. Array values are rendered as Bard HTML.
+
+```antlers
+{{ caption = asset | asset_meta('caption') }}
+```
+
+Pass an explicit locale as the optional second parameter to prioritize it over the current locale.
+
+```antlers
+{{ caption = asset | asset_meta('caption', 'de') }}
+```
+
 ### Br 2 Nl
 
 Strip tags, but keep line breaks as visually intended by the html.

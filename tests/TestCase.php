@@ -48,6 +48,7 @@ abstract class TestCase extends BaseTestCase
     protected function registerAddon(): void
     {
         Modifiers\Asset::register();
+        Modifiers\AssetMeta::register();
         Modifiers\Br2Nl::register();
         Modifiers\CountSafe::register();
         Modifiers\Except::register();

@@ -3,7 +3,8 @@
 use Daun\StatamicUtils\Modifiers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Statamic\Contracts\Assets\Asset;
+use Statamic\Assets\Asset;
+use Statamic\Contracts\Assets\Asset as AssetContract;
 use Statamic\Query\Builder;
 
 /*
@@ -27,10 +28,54 @@ test('asset modifier returns null for non-asset objects', function () {
 });
 
 test('asset modifier returns the asset when an asset is passed', function () {
-    $asset = Mockery::mock(Asset::class);
+    $asset = Mockery::mock(AssetContract::class);
     $m = new Modifiers\Asset;
 
     expect($m->index($asset))->toBe($asset);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Asset Meta
+|--------------------------------------------------------------------------
+*/
+
+test('asset_meta returns null when no key is given', function () {
+    $asset = Mockery::mock(Asset::class);
+
+    expect((new Modifiers\AssetMeta)->index($asset, [], []))->toBeNull();
+});
+
+test('asset_meta returns null for non-asset values', function () {
+    expect((new Modifiers\AssetMeta)->index('not an asset', ['caption'], []))->toBeNull();
+    expect((new Modifiers\AssetMeta)->index(null, ['caption'], []))->toBeNull();
+});
+
+test('asset_meta reads a localized meta value', function () {
+    $asset = Mockery::mock(Asset::class);
+    $asset->shouldReceive('get')->andReturnUsing(
+        fn ($key) => $key === 'caption_en' ? 'Hello' : null
+    );
+
+    expect((new Modifiers\AssetMeta)->index($asset, ['caption'], []))->toBe('Hello');
+});
+
+test('asset_meta falls back to the unsuffixed key', function () {
+    $asset = Mockery::mock(Asset::class);
+    $asset->shouldReceive('get')->andReturnUsing(
+        fn ($key) => $key === 'caption' ? 'Plain' : null
+    );
+
+    expect((new Modifiers\AssetMeta)->index($asset, ['caption'], []))->toBe('Plain');
+});
+
+test('asset_meta prioritizes an explicit locale parameter', function () {
+    $asset = Mockery::mock(Asset::class);
+    $asset->shouldReceive('get')->andReturnUsing(
+        fn ($key) => $key === 'caption_de' ? 'Hallo' : null
+    );
+
+    expect((new Modifiers\AssetMeta)->index($asset, ['caption', 'de'], []))->toBe('Hallo');
 });
 
 /*

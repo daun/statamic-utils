@@ -12,7 +12,6 @@ class Asset extends Modifier
      * Return or find an asset by id or url.
      *
      * @param  mixed  $value  The asset id/url or potential Asset object
-     * @return AssetContract|null
      */
     public function index($value): ?AssetContract
     {
