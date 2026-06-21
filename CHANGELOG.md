@@ -2,6 +2,13 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.1.0 - 2026-06-21
+
+- Add `asset_meta` modifier
+- Add `hostname` modifier
+- Add `qr_code` modifier
+- Add `query_append` modifier
+
 ## 3.0.0 - 2026-06-18
 
 - Fix duplicate parsing in repeat tag
