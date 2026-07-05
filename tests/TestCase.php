@@ -74,6 +74,7 @@ abstract class TestCase extends BaseTestCase
         Tags\Icon::register();
         Tags\IfContent::register();
         Tags\Key::register();
+        Tags\Random::register();
         Tags\Repeat::register();
     }
 }

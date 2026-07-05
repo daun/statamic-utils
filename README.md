@@ -321,6 +321,18 @@ Inject a stable `key` attribute into the first element of a block so a morphing 
 <div key="<md5-of-rendered-content>" data-skip-morph-if-keys-equal class="card">...</div>
 ```
 
+### Random
+
+Generate a random value. Use `{{ random }}` for a 32-character hexadecimal hash, or `{{ random:int }}`
+for a random integer. The integer variant accepts optional `min` (default `1`) and `max` (default
+`PHP_INT_MAX`) parameters.
+
+```antlers
+{{ random }}                        {{# e.g. 9e107d9d372bb6826bd81d3542a419d6 #}}
+{{ random:int }}                    {{# random integer #}}
+{{ random:int min="1" max="10" }}   {{# random integer between 1 and 10 #}}
+```
+
 ## Actions
 
 ### Edit Collection Mount

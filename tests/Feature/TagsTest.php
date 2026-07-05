@@ -186,3 +186,28 @@ EOT;
 test('key throws when used as a single tag', function () {
     expect(fn () => antlers('{{ key:tag }}'))->toThrow(Exception::class);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Random
+|--------------------------------------------------------------------------
+*/
+
+test('random outputs a 32 character hexadecimal hash', function () {
+    expect(antlers('{{ random }}'))->toMatch('/^[a-f0-9]{32}$/');
+});
+
+test('random produces a different value on each render', function () {
+    expect(antlers('{{ random }}'))->not->toBe(antlers('{{ random }}'));
+});
+
+test('random int respects an inclusive min and max', function () {
+    expect(antlers('{{ random:int min="7" max="7" }}'))->toBe('7');
+});
+
+test('random int stays within the given bounds', function () {
+    $value = (int) antlers('{{ random:int min="1" max="10" }}');
+
+    expect($value)->toBeGreaterThanOrEqual(1);
+    expect($value)->toBeLessThanOrEqual(10);
+});
