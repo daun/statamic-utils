@@ -70,6 +70,7 @@ abstract class TestCase extends BaseTestCase
         Modifiers\WrapWords::register();
 
         Tags\Capture::register();
+        Tags\GetMountRoot::register();
         Tags\Icon::register();
         Tags\IfContent::register();
         Tags\Repeat::register();

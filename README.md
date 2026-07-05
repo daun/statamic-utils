@@ -293,6 +293,19 @@ Render the contained content a specified number of times.
 {{ /repeat }}
 ```
 
+### Get Mount Root
+
+Find the root entry mounted at the current URL. Useful for locating the top-level page of a mounted
+collection. Pass an explicit URL via the `of` parameter to look it up somewhere other than the current page.
+
+```antlers
+{{ get_mount_root }}
+    Root page: {{ title }}
+{{ /get_mount_root }}
+
+{{ get_mount_root of="/blog/my-post" }}
+```
+
 ## Actions
 
 ### Edit Collection Mount

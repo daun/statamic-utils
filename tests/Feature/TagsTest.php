@@ -142,3 +142,17 @@ EOT;
 
     expect(antlers($template))->toBe('');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Get Mount Root
+|--------------------------------------------------------------------------
+*/
+
+test('get_mount_root yields nothing when no root entry matches the current url', function () {
+    expect(antlers('{{ get_mount_root }}'))->toBe('');
+});
+
+test('get_mount_root accepts an explicit url via the of parameter', function () {
+    expect(antlers('{{ get_mount_root of="/no-such-page" }}'))->toBe('');
+});
