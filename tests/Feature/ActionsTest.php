@@ -2,7 +2,9 @@
 
 use Daun\StatamicUtils\Actions\ConnectToOrigin;
 use Daun\StatamicUtils\Actions\EditCollectionMount;
+use Daun\StatamicUtils\Actions\SetAssetAttribution;
 use Daun\StatamicUtils\Actions\ShowMountEntries;
+use Statamic\Contracts\Assets\Asset;
 use Statamic\Entries\Collection;
 use Statamic\Entries\Entry;
 use Statamic\Facades\Collection as Collections;
@@ -144,4 +146,56 @@ test('connect to origin throws when the chosen origin cannot be found', function
 
     expect(fn () => (new ConnectToOrigin)->run(collect(), ['origin' => null]))
         ->toThrow(Exception::class, 'Origin not found.');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Set Asset Attribution
+|--------------------------------------------------------------------------
+*/
+
+test('set asset attribution has a title', function () {
+    expect(SetAssetAttribution::title())->toBe('Set Attribution');
+});
+
+test('set asset attribution is only visible for media assets', function () {
+    $action = new SetAssetAttribution;
+
+    $media = Mockery::mock(Asset::class);
+    $media->shouldReceive('isMedia')->andReturn(true);
+
+    $document = Mockery::mock(Asset::class);
+    $document->shouldReceive('isMedia')->andReturn(false);
+
+    expect($action->visibleTo($media))->toBeTrue();
+    expect($action->visibleTo($document))->toBeFalse();
+    expect($action->visibleTo(new stdClass))->toBeFalse();
+});
+
+test('set asset attribution writes the attribution to selected assets', function () {
+    $asset = Mockery::mock(Asset::class);
+    $asset->shouldReceive('get')->with('attribution')->andReturn(null);
+    $asset->shouldReceive('set')->with('attribution', 'Jane Doe')->once();
+    $asset->shouldReceive('saveQuietly')->once();
+
+    $result = (new SetAssetAttribution)->run(collect([$asset]), [
+        'attribution' => 'Jane Doe',
+        'overwrite' => true,
+    ]);
+
+    expect($result)->toBe('Attribution updated.');
+});
+
+test('set asset attribution skips assets with existing data when overwrite is off', function () {
+    $asset = Mockery::mock(Asset::class);
+    $asset->shouldReceive('get')->with('attribution')->andReturn('Existing');
+    $asset->shouldNotReceive('set');
+    $asset->shouldNotReceive('saveQuietly');
+
+    $result = (new SetAssetAttribution)->run(collect([$asset]), [
+        'attribution' => 'Jane Doe',
+        'overwrite' => false,
+    ]);
+
+    expect($result)->toBe('No assets were updated.');
 });

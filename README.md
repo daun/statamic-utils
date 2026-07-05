@@ -349,6 +349,11 @@ Connect an entry to an origin (localization source) directly from its edit form.
 entries in multi-site collections that don't yet have an origin, letting editors pick a candidate
 entry in another language to link to.
 
+### Set Asset Attribution
+
+Bulk-set a copyright or credit attribution on selected media assets. Provides an option to skip assets
+that already have an attribution, so existing data isn't overwritten unless requested.
+
 ## Query Scopes
 
 Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
