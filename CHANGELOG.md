@@ -2,6 +2,19 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.2.0 - 2026-07-05
+
+- Add `get_mount_root` tag
+- Add `key` tag
+- Add `random` tag
+- Add `Connect to Origin` action
+- Add `Set Asset Attribution` action
+- Add `Collections` dictionary
+- Add `Locales` dictionary
+- Add `DynamicDebugMode` middleware
+- Add `RequiredIfPublic` validation rule
+- Add `app:update-entry-uris` command
+
 ## 3.1.0 - 2026-06-21
 
 - Add `asset_meta` modifier
