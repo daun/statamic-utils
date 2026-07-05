@@ -1,6 +1,7 @@
 <?php
 
 use Daun\StatamicUtils\Dictionaries\Collections;
+use Daun\StatamicUtils\Dictionaries\Locales;
 use Statamic\Facades\Collection;
 
 /*
@@ -19,4 +20,16 @@ test('collections dictionary maps collection handles to titles', function () {
         'blog' => 'Blog',
         'pages' => 'Pages',
     ]);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Locales
+|--------------------------------------------------------------------------
+*/
+
+test('locales dictionary maps short locales to site names', function () {
+    $options = (new Locales)->options();
+
+    expect($options)->toBe(['en' => 'Laravel']);
 });
