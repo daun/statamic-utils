@@ -306,6 +306,21 @@ collection. Pass an explicit URL via the `of` parameter to look it up somewhere 
 {{ get_mount_root of="/blog/my-post" }}
 ```
 
+### Key
+
+Inject a stable `key` attribute into the first element of a block so a morphing frontend (e.g. Alpine
+/ Livewire) skips re-rendering it when its content is unchanged. Must be used as a pair.
+
+```antlers
+{{ key:tag }}
+    <div class="card">{{ content }}</div>
+{{ /key:tag }}
+```
+
+```html
+<div key="<md5-of-rendered-content>" data-skip-morph-if-keys-equal class="card">...</div>
+```
+
 ## Actions
 
 ### Edit Collection Mount

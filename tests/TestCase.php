@@ -73,6 +73,7 @@ abstract class TestCase extends BaseTestCase
         Tags\GetMountRoot::register();
         Tags\Icon::register();
         Tags\IfContent::register();
+        Tags\Key::register();
         Tags\Repeat::register();
     }
 }

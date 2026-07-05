@@ -156,3 +156,33 @@ test('get_mount_root yields nothing when no root entry matches the current url',
 test('get_mount_root accepts an explicit url via the of parameter', function () {
     expect(antlers('{{ get_mount_root of="/no-such-page" }}'))->toBe('');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Key
+|--------------------------------------------------------------------------
+*/
+
+test('key injects a stable key attribute into the first element', function () {
+    $template = <<<'EOT'
+{{ key:tag }}<div class="card">Hello</div>{{ /key:tag }}
+EOT;
+
+    $output = antlers($template);
+
+    expect($output)->toStartWith('<div key=');
+    expect($output)->toContain('data-skip-morph-if-keys-equal');
+    expect($output)->toContain('>Hello</div>');
+});
+
+test('key derives the same key for identical content', function () {
+    $template = <<<'EOT'
+{{ key:tag }}<div class="card">Hello</div>{{ /key:tag }}
+EOT;
+
+    expect(antlers($template))->toBe(antlers($template));
+});
+
+test('key throws when used as a single tag', function () {
+    expect(fn () => antlers('{{ key:tag }}'))->toThrow(Exception::class);
+});
