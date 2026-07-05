@@ -68,7 +68,7 @@ class SetAssetAttribution extends Action
 
         if ($updated === 1) {
             return __('Attribution updated.');
-        } else if ($updated) {
+        } elseif ($updated) {
             return __('Attribution updated for :count assets.', ['count' => $updated]);
         } else {
             return __('No assets were updated.');
