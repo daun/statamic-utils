@@ -410,6 +410,17 @@ $rules = [
 ];
 ```
 
+## Commands
+
+### UpdateEntryUris
+
+An artisan command that rebuilds the cached URIs for every entry in all collections. Useful after bulk
+changes to routes or collection structure.
+
+```bash
+php artisan app:update-entry-uris
+```
+
 ## Query Scopes
 
 Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
