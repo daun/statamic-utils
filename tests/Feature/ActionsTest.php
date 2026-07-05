@@ -1,10 +1,12 @@
 <?php
 
+use Daun\StatamicUtils\Actions\ConnectToOrigin;
 use Daun\StatamicUtils\Actions\EditCollectionMount;
 use Daun\StatamicUtils\Actions\ShowMountEntries;
 use Statamic\Entries\Collection;
 use Statamic\Entries\Entry;
 use Statamic\Facades\Collection as Collections;
+use Statamic\Facades\Entry as Entries;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,4 +81,67 @@ test('show mount entries redirect returns false when the entry is not a mount', 
     Collections::shouldReceive('findByMount')->with($entry)->andReturn(null);
 
     expect((new ShowMountEntries)->redirect(collect([$entry]), []))->toBeFalse();
+});
+
+/*
+|--------------------------------------------------------------------------
+| Connect to Origin
+|--------------------------------------------------------------------------
+*/
+
+test('connect to origin has a title and is never available in bulk', function () {
+    expect(ConnectToOrigin::title())->toBe('Connect to Origin');
+    expect((new ConnectToOrigin)->visibleToBulk([]))->toBeFalse();
+});
+
+test('connect to origin exposes button and confirmation text', function () {
+    $action = new ConnectToOrigin;
+
+    expect($action->buttonText())->toContain('Connect to Origin');
+    expect($action->confirmationText())->toContain('chosen origin');
+});
+
+test('connect to origin authorizes users who can edit the item', function () {
+    $item = Mockery::mock(Entry::class);
+
+    $user = Mockery::mock();
+    $user->shouldReceive('can')->with('edit', $item)->andReturn(true);
+
+    expect((new ConnectToOrigin)->authorize($user, $item))->toBeTrue();
+});
+
+test('connect to origin is only visible in the edit form for multi-site entries without an origin', function () {
+    $sites = Mockery::mock();
+    $sites->shouldReceive('count')->andReturn(2);
+
+    $collection = Mockery::mock(Collection::class);
+    $collection->shouldReceive('sites')->andReturn($sites);
+
+    $entry = Mockery::mock(Entry::class);
+    $entry->shouldReceive('collection')->andReturn($collection);
+    $entry->shouldReceive('hasOrigin')->andReturn(false);
+    $entry->shouldReceive('locale')->andReturn('en');
+
+    $action = (new ConnectToOrigin)->context(['view' => 'form', 'collection' => 'pages']);
+
+    expect($action->visibleTo($entry))->toBeTrue();
+});
+
+test('connect to origin is hidden outside the edit form', function () {
+    $entry = Mockery::mock(Entry::class);
+
+    $action = (new ConnectToOrigin)->context(['view' => 'list', 'collection' => 'pages']);
+
+    expect($action->visibleTo($entry))->toBeFalse();
+});
+
+test('connect to origin throws when the chosen origin cannot be found', function () {
+    $query = Mockery::mock();
+    $query->shouldReceive('where')->andReturnSelf();
+    $query->shouldReceive('first')->andReturn(null);
+
+    Entries::shouldReceive('query')->andReturn($query);
+
+    expect(fn () => (new ConnectToOrigin)->run(collect(), ['origin' => null]))
+        ->toThrow(Exception::class, 'Origin not found.');
 });
