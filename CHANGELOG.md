@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.3.0 - 2026-07-16
+
+- Add custom `sets` fieldtype with auto-hoisted set metadata
+
 ## 3.2.0 - 2026-07-05
 
 - Add `get_mount_root` tag
