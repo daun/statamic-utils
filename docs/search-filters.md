@@ -1,6 +1,6 @@
 # Search Filters
 
-Classes for [filtering entries](https://statamic.dev/search#filtering-searchables) for search indexing.
+[Search filters](https://statamic.dev/search#filtering-searchables) control which entries are included in search indexes.
 
 - `Published`: Filter out unpublished entries.
 - `All`: Include all entries, regardless of their published status.

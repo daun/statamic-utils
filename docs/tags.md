@@ -1,5 +1,7 @@
 # Tags
 
+[Tags](https://statamic.dev/tags) fetch, filter, and display data or add dynamic functionality in Antlers templates.
+
 ### Capture
 
 Capture the output of a template section and assign it to a variable. Similar to assigning the output

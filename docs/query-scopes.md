@@ -1,6 +1,6 @@
 # Query Scopes
 
-Apply [query scopes](https://statamic.dev/extending/query-scopes-and-filters) to narrow down query results.
+[Query scopes](https://statamic.dev/extending/query-scopes-and-filters) narrow down query results in templates and control panel listings.
 
 - `Published`: Query published entries
 - `Origin`: Query origin entries (exclude localized entries)

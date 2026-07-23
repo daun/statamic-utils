@@ -1,9 +1,11 @@
 # Middleware
 
-### DynamicDebugMode
+HTTP [middleware](https://laravel.com/docs/13.x/middleware) classes to customize request handling.
 
-HTTP middleware that conditionally enables Laravel's debug mode at runtime for allow-listed IP
-addresses or requests carrying a secret cookie. Configure it under `config/app.php`:
+### Dynamic Debug Mode
+
+Conditionally enable Laravel's debug mode at runtime for allow-listed IP addresses
+or requests carrying a secret cookie. Configure it under `config/app.php`:
 
 ```php
 // config/app.php

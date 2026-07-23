@@ -1,5 +1,7 @@
 # Cache
 
+Utilities for [static caching](https://statamic.dev/static-caching) and its configuration.
+
 ### Query Params
 
 Get an up-to-date list of marketing query params to ignore when caching a page.

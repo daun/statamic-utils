@@ -1,7 +1,6 @@
 # Rules
 
-[Validation rules](https://laravel.com/docs/validation#custom-validation-rules) for use in blueprints
-or form requests.
+[Validation](https://statamic.dev/validation) rules to use in blueprint fields and forms.
 
 ### RequiredIfPublic
 

@@ -1,5 +1,7 @@
 # Actions
 
+[Actions](https://statamic.dev/backend-apis/actions) perform tasks on one or more items in control panel listings.
+
 ### Edit Collection Mount
 
 Redirect to the edit form of a collection's mount page from its entry listing view.
