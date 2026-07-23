@@ -5,6 +5,7 @@ All notable changes to this package will be documented in this file.
 ## 3.4.0 - 2026-07-23
 
 - Add `origin` and `localization` scopes
+- Add label param to `icon` tag
 
 ## 3.3.0 - 2026-07-16
 
