@@ -38,7 +38,20 @@ Render an SVG icon from an existing sprite map.
 ```
 
 ```html
-<svg class="icon icon-search" preserveAspectRatio="xMinYMid" aria-hidden="true">
+<svg class="icon icon-search" aria-hidden="true">
+    <use xlink:href="#icon-search">
+</svg>
+```
+
+By default, the icon is hidden from screen readers. An optional `label` parameter will make it
+visible and accessible under that label.
+
+```antlers
+{{ icon:search label="Search" }}
+```
+
+```html
+<svg class="icon icon-search" aria-label="Search">
     <use xlink:href="#icon-search">
 </svg>
 ```

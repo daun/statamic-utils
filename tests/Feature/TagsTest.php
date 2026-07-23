@@ -75,6 +75,13 @@ test('icon accepts a custom aspect ratio', function () {
     expect(antlers('{{ icon:search ratio="none" }}'))->toContain('preserveAspectRatio="none"');
 });
 
+test('icon uses an accessible label when provided', function () {
+    $output = antlers('{{ icon:search label="Search" }}');
+
+    expect($output)->toContain('aria-label="Search"');
+    expect($output)->not->toContain('aria-hidden');
+});
+
 /*
 |--------------------------------------------------------------------------
 | IfContent
