@@ -1,6 +1,10 @@
 <?php
 
 use Daun\StatamicUtils\Scopes;
+use Statamic\Facades\Collection;
+use Statamic\Facades\Entry;
+use Statamic\Facades\Site;
+use Statamic\Facades\Stache;
 
 /**
  * A tiny fake query builder that records the arguments passed to whereIn().
@@ -103,4 +107,76 @@ test('published scope falls back to a where clause when whereStatus is missing',
     (new Scopes\Published)->apply($query, []);
 
     expect($query->where)->toBe(['status', 'published']);
+});
+
+describe('origin scopes', function () {
+    $contentPath = sys_get_temp_dir().'/statamic-utils-tests/origin-scopes';
+
+    beforeEach(function () use ($contentPath) {
+        app('files')->deleteDirectory($contentPath);
+        Stache::store('collections')->directory($contentPath.'/collections');
+        Stache::store('entries')->directory($contentPath.'/collections');
+        Stache::clear();
+
+        config()->set('statamic.system.multisite', true);
+
+        Site::setSites([
+            'en' => [
+                'name' => 'English',
+                'locale' => 'en_US',
+                'url' => '/',
+            ],
+            'fr' => [
+                'name' => 'French',
+                'locale' => 'fr_FR',
+                'url' => '/fr/',
+            ],
+        ]);
+
+        Collection::make('origin_scope_test')
+            ->title('Origin Scope Test')
+            ->sites(['en', 'fr'])
+            ->save();
+    });
+
+    afterEach(function () use ($contentPath) {
+        Collection::find('origin_scope_test')?->delete();
+        app('files')->deleteDirectory($contentPath);
+        Site::setSites();
+        config()->set('statamic.system.multisite', false);
+    });
+
+    test('origin scope returns origin entries', function () {
+        $origin = Entry::make()
+            ->collection('origin_scope_test')
+            ->locale('en')
+            ->slug('origin-entry')
+            ->data(['title' => 'Origin Entry']);
+        $origin->save();
+
+        $localization = $origin->makeLocalization('fr');
+        $localization->save();
+
+        $query = Entry::query()->where('collection', 'origin_scope_test');
+        (new Scopes\Origin)->apply($query, []);
+
+        expect($query->get()->map->id()->all())->toBe([$origin->id()]);
+    });
+
+    test('localization scope returns localized entries', function () {
+        $origin = Entry::make()
+            ->collection('origin_scope_test')
+            ->locale('en')
+            ->slug('origin-entry')
+            ->data(['title' => 'Origin Entry']);
+        $origin->save();
+
+        $localization = $origin->makeLocalization('fr');
+        $localization->save();
+
+        $query = Entry::query()->where('collection', 'origin_scope_test');
+        (new Scopes\Localization)->apply($query, []);
+
+        expect($query->get()->map->id()->all())->toBe([$localization->id()]);
+    });
 });
