@@ -196,16 +196,43 @@ test('get_mount_root accepts an explicit url via the of parameter', function () 
 |--------------------------------------------------------------------------
 */
 
-test('key injects a stable key attribute into the first element', function () {
+test('key injects stable id and key attributes into the first element', function () {
     $template = <<<'EOT'
 {{ key:tag }}<div class="card">Hello</div>{{ /key:tag }}
 EOT;
 
     $output = antlers($template);
 
-    expect($output)->toStartWith('<div key=');
+    expect($output)->toStartWith("<div id='key-");
+    expect($output)->toContain(" key='");
     expect($output)->toContain('data-skip-morph-if-keys-equal');
     expect($output)->toContain('>Hello</div>');
+});
+
+test('key injects attributes into an HTML tag without attributes', function () {
+    $template = <<<'EOT'
+{{ key:tag }}<picture><img src="photo.jpg"></picture>{{ /key:tag }}
+EOT;
+
+    $output = antlers($template);
+
+    expect($output)->toStartWith("<picture id='key-");
+    expect($output)->toContain(" key='");
+    expect($output)->toContain('data-skip-morph-if-keys-equal');
+    expect($output)->toContain('<img src="photo.jpg">');
+});
+
+test('key preserves an existing id attribute', function () {
+    $template = <<<'EOT'
+{{ key:tag }}<div id="existing">Hello</div>{{ /key:tag }}
+EOT;
+
+    $output = antlers($template);
+
+    expect($output)->toStartWith("<div key='");
+    expect($output)->toContain('data-skip-morph-if-keys-equal');
+    expect($output)->toContain('id="existing"');
+    expect(substr_count($output, 'id='))->toBe(1);
 });
 
 test('key derives the same key for identical content', function () {
