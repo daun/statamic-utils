@@ -17,9 +17,20 @@ class Key extends Tags
 
         $content = $this->parse();
         $key = md5($content);
-        $attr = " key='{$key}' data-skip-morph-if-keys-equal";
-        $content = preg_replace('/^(\s*<\S+)(>|\s)/', '\\1'.$attr.'\\2', $content);
 
-        return $content;
+        return preg_replace_callback(
+            '/^(\s*<[^\s>\/]+)((?:"[^"]*"|\'[^\']*\'|[^\'">])*)(>)/s',
+            function (array $matches) use ($key): string {
+                $hasId = preg_match(
+                    '/(?:"[^"]*"|\'[^\']*\')(*SKIP)(*F)|(?:^|\s)id\s*=/i',
+                    $matches[2],
+                ) === 1;
+                $id = $hasId ? '' : " id='key-{$key}'";
+                $attributes = "{$id} key='{$key}' data-skip-morph-if-keys-equal";
+
+                return $matches[1].$attributes.$matches[2].$matches[3];
+            },
+            $content,
+        );
     }
 }
