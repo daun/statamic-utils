@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.5.0 - 2026-07-25
+
+- Extend allowed tags in ifcontent tag
+
 ## 3.4.0 - 2026-07-23
 
 - Add `origin` and `localization` scopes
