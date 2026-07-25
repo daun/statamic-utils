@@ -58,8 +58,10 @@ visible and accessible under that label.
 
 ### IfContent
 
-Render a block of content only if it is not empty, i.e. if it contains actual text content. A block
-of content containing only whitespace or empty tags will not be rendered.
+Render a block of content only if it contains text or an element that can produce visual output. A
+block containing only whitespace or empty container tags will not be rendered. Content-producing
+elements include `img`, `svg`, `video`, `audio`, `iframe`, `script`, `canvas`, `embed`, `hr`,
+`input`, `button`, `select`, `textarea`, `meter`, and `progress`.
 
 ```antlers
 {{ if_content }}

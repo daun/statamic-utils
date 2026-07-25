@@ -112,12 +112,38 @@ EOT;
     expect(trim(antlers($template)))->toBe('');
 });
 
-test('if_content renders media-only content even without text', function () {
+test('if_content renders content-producing elements without text', function () {
+    $elements = [
+        '<img src="cat.jpg">',
+        '<svg></svg>',
+        '<video></video>',
+        '<audio></audio>',
+        '<iframe></iframe>',
+        '<script src="widget.js"></script>',
+        '<canvas></canvas>',
+        '<embed src="document.pdf">',
+        '<hr>',
+        '<input>',
+        '<button></button>',
+        '<select></select>',
+        '<textarea></textarea>',
+        '<meter></meter>',
+        '<progress></progress>',
+    ];
+
+    foreach ($elements as $element) {
+        $template = "{{ if_content }}{$element}{{ /if_content }}";
+
+        expect(antlers($template))->toContain($element);
+    }
+});
+
+test('if_content renders scripts that write content', function () {
     $template = <<<'EOT'
-{{ if_content }}<img src="cat.jpg">{{ /if_content }}
+{{ if_content }}<script>document.write('<p>Hello</p>')</script>{{ /if_content }}
 EOT;
 
-    expect(antlers($template))->toContain('<img src="cat.jpg">');
+    expect(antlers($template))->toContain("document.write('<p>Hello</p>')");
 });
 
 /*
