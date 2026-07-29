@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.7.1 - 2026-07-29
+
+- Fix `ifcontent` tag for dynamically rendered text
+
 ## 3.7.0 - 2026-07-29
 
 - Extend tracking query params
