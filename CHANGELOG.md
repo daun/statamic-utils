@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.7.0 - 2026-07-29
+
+- Extend tracking query params
+
 ## 3.6.0 - 2026-07-25
 
 - Improve the `key` tag to support attribute-free HTML tags and add stable IDs
