@@ -2,6 +2,7 @@
 
 namespace Daun\StatamicUtils\Data;
 
+use Statamic\Data\AugmentedCollection;
 use Statamic\Facades\Compare;
 use Statamic\Fields\ArrayableString;
 use Statamic\Fields\LabeledValue;
@@ -14,15 +15,19 @@ class Resolver
 {
     public static function actual(...$values): mixed
     {
+        $resolved = false;
+
         foreach ($values as $value) {
             if ($value instanceof Values) {
                 $value = $value->all();
             }
             if ($value instanceof Value) {
                 $value = $value->value();
+                $resolved = true;
             }
             if ($value instanceof LabeledValue) {
                 $value = $value->value();
+                $resolved = true;
             }
             if ($value instanceof ArrayableString) {
                 $value = $value->__toString();
@@ -32,11 +37,17 @@ class Resolver
             }
             if ($value instanceof FluentTag) {
                 $value = static::actual($value->fetch());
+                $resolved = true;
             }
             if ($value instanceof Modify) {
                 $value = static::actual($value->fetch());
+                $resolved = true;
             }
-            if (isset($value)) {
+            if ($value instanceof AugmentedCollection) {
+                $value = collect($value->all());
+            }
+
+            if (isset($value) || $resolved) {
                 return $value;
             }
         }
