@@ -7,7 +7,7 @@ use Statamic\Query\Scopes\Scope;
 class Localization extends Scope
 {
     protected static $aliases = [
-        'descendant'
+        'descendant',
     ];
 
     public function apply($query, $values)

@@ -54,7 +54,7 @@ class IfContent extends Tags
     private function markRenderedText(string $html): string
     {
         return preg_match(self::TEXT_DIRECTIVE_PATTERN, $html)
-            ? '<has-content />' . $html
+            ? '<has-content />'.$html
             : $html;
     }
 }
