@@ -42,9 +42,58 @@ test('the BardText transformer returns null for empty values', function () {
     expect((new Transformers\BardText)->handle(''))->toBeNull();
 });
 
-test('the BardText transformer returns the value when field or searchable is missing', function () {
+test('the BardText transformer flattens plain values when field or searchable is missing', function () {
     expect((new Transformers\BardText)->handle('some text'))->toBe('some text');
     expect((new Transformers\BardText)->handle('some text', 'content'))->toBe('some text');
+});
+
+test('the BardText transformer separates breaks and blocks with a space', function () {
+    $bard = [
+        [
+            'type' => 'paragraph',
+            'content' => [
+                ['type' => 'text', 'text' => 'Konzept & Regie'],
+                ['type' => 'hardBreak'],
+                ['type' => 'text', 'text' => 'Martin Finnland'],
+            ],
+        ],
+        [
+            'type' => 'heading',
+            'attrs' => ['level' => 2],
+            'content' => [['type' => 'text', 'text' => 'Mit']],
+        ],
+        [
+            'type' => 'bulletList',
+            'content' => [
+                ['type' => 'listItem', 'content' => [['type' => 'text', 'text' => 'One']]],
+                ['type' => 'listItem', 'content' => [['type' => 'text', 'text' => 'Two']]],
+            ],
+        ],
+    ];
+
+    expect(Transformers\BardText::text($bard))
+        ->toBe('Konzept & Regie Martin Finnland Mit One Two');
+});
+
+test('the BardText transformer keeps marked text intact', function () {
+    $bard = [[
+        'type' => 'paragraph',
+        'content' => [
+            ['type' => 'text', 'text' => 'Founded in '],
+            ['type' => 'text', 'text' => 'Vienna', 'marks' => [['type' => 'bold']]],
+            ['type' => 'text', 'text' => '.'],
+        ],
+    ]];
+
+    expect(Transformers\BardText::text($bard))->toBe('Founded in Vienna.');
+});
+
+test('the BardText transformer flattens html strings', function () {
+    expect(Transformers\BardText::text('<p>Founded in <strong>Vienna</strong>.</p><p>Since 2011.</p>'))
+        ->toBe('Founded in Vienna. Since 2011.');
+    expect(Transformers\BardText::text('Konzept &amp; Regie<br>Martin Finnland'))
+        ->toBe('Konzept &amp; Regie Martin Finnland');
+    expect(Transformers\BardText::text('   '))->toBeNull();
 });
 
 /*
