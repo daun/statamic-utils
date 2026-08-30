@@ -4,7 +4,8 @@ All notable changes to this package will be documented in this file.
 
 ## 3.7.2 - 2026-08-30
 
-- Fix `BardText` transformer gluing words together across hard breaks and blocks
+- Fix search transformer word concatenation across hard breaks
+- Fix infine loop in data resolver for null values
 
 ## 3.7.1 - 2026-07-29
 
