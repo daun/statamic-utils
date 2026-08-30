@@ -7,11 +7,7 @@ use Statamic\Support\Arr;
 use Stringy\StaticStringy as Stringy;
 
 /**
- * Flatten a Bard value to plain text for indexing.
- *
- * Statamic's `bard_text` modifier joins text nodes without a separator and only
- * spaces out paragraphs, so a hard break or heading indexes as "…Konzept &
- * RegieMartin Finnland" and reads that way in search results.
+ * Flatten a Bard value to plain text for indexing. Replaces line breaks with spaces.
  */
 class BardText
 {
@@ -44,8 +40,7 @@ class BardText
     }
 
     /**
-     * Only line and block boundaries separate words; inline tags do not, or
-     * `in <strong>Vienna</strong>.` would flatten to `in Vienna .`.
+     * Only line and block boundaries separate words; inline tags do not.
      */
     protected static function breakTags(string $html): string
     {
