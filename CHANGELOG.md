@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.7.3 - 2026-09-06
+
+- Allow uppercase extensions in query scopes
+
 ## 3.7.2 - 2026-08-30
 
 - Fix search transformer word concatenation across hard breaks
