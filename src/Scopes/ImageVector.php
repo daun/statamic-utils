@@ -17,7 +17,7 @@ class ImageVector extends Scope
     public function apply($query, $values)
     {
         $query->whereIn('extension', [
-            'svg',
+            'svg', 'SVG',
         ]);
     }
 }

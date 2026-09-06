@@ -17,14 +17,14 @@ class Image extends Scope
     public function apply($query, $values)
     {
         $query->whereIn('extension', [
-            'gif',
-            'jpg',
-            'jpeg',
-            'png',
-            'apng',
-            'webp',
-            'avif',
-            'svg',
+            'gif', 'GIF',
+            'jpg', 'JPG',
+            'jpeg', 'JPEG',
+            'png', 'PNG',
+            'apng', 'APNG',
+            'webp', 'WEBP',
+            'avif', 'AVIF',
+            'svg', 'SVG',
         ]);
     }
 }

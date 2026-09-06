@@ -17,12 +17,12 @@ class Video extends Scope
     public function apply($query, $values)
     {
         $query->whereIn('extension', [
-            'h264',
-            'mp4',
-            'm4v',
-            'ogv',
-            'webm',
-            'mov',
+            'h264', 'H264',
+            'mp4', 'MP4',
+            'm4v', 'M4V',
+            'ogv', 'OGV',
+            'webm', 'WEBM',
+            'mov', 'MOV',
         ]);
     }
 }

@@ -17,13 +17,13 @@ class Audio extends Scope
     public function apply($query, $values)
     {
         $query->whereIn('extension', [
-            'aac',
-            'aiff',
-            'flac',
-            'm4a',
-            'mp3',
-            'ogg',
-            'wav',
+            'aac', 'AAC',
+            'aiff', 'AIFF',
+            'flac', 'FLAC',
+            'm4a', 'M4A',
+            'mp3', 'MP3',
+            'ogg', 'OGG',
+            'wav', 'WAV',
         ]);
     }
 }

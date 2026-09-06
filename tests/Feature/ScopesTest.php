@@ -32,35 +32,43 @@ test('image scope filters to pixel and vector image extensions', function () {
     (new Scopes\Image)->apply($query, []);
 
     expect($query->column)->toBe('extension');
-    expect($query->values)->toBe(['gif', 'jpg', 'jpeg', 'png', 'apng', 'webp', 'avif', 'svg']);
+    expect($query->values)->toBe([
+        'gif', 'GIF', 'jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'apng', 'APNG', 'webp', 'WEBP', 'avif', 'AVIF', 'svg', 'SVG',
+    ]);
 });
 
 test('image pixel scope filters to raster image extensions only', function () {
     $query = fakeExtensionQuery();
     (new Scopes\ImagePixel)->apply($query, []);
 
-    expect($query->values)->toBe(['gif', 'jpg', 'jpeg', 'png', 'apng', 'webp', 'avif']);
+    expect($query->values)->toBe([
+        'gif', 'GIF', 'jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'apng', 'APNG', 'webp', 'WEBP', 'avif', 'AVIF',
+    ]);
 });
 
 test('image vector scope filters to svg only', function () {
     $query = fakeExtensionQuery();
     (new Scopes\ImageVector)->apply($query, []);
 
-    expect($query->values)->toBe(['svg']);
+    expect($query->values)->toBe(['svg', 'SVG']);
 });
 
 test('video scope filters to video extensions', function () {
     $query = fakeExtensionQuery();
     (new Scopes\Video)->apply($query, []);
 
-    expect($query->values)->toBe(['h264', 'mp4', 'm4v', 'ogv', 'webm', 'mov']);
+    expect($query->values)->toBe([
+        'h264', 'H264', 'mp4', 'MP4', 'm4v', 'M4V', 'ogv', 'OGV', 'webm', 'WEBM', 'mov', 'MOV',
+    ]);
 });
 
 test('audio scope filters to audio extensions', function () {
     $query = fakeExtensionQuery();
     (new Scopes\Audio)->apply($query, []);
 
-    expect($query->values)->toBe(['aac', 'aiff', 'flac', 'm4a', 'mp3', 'ogg', 'wav']);
+    expect($query->values)->toBe([
+        'aac', 'AAC', 'aiff', 'AIFF', 'flac', 'FLAC', 'm4a', 'M4A', 'mp3', 'MP3', 'ogg', 'OGG', 'wav', 'WAV',
+    ]);
 });
 
 test('image or video scope filters to both image and video extensions', function () {
@@ -68,8 +76,8 @@ test('image or video scope filters to both image and video extensions', function
     (new Scopes\ImageOrVideo)->apply($query, []);
 
     expect($query->values)->toBe([
-        'gif', 'jpg', 'jpeg', 'png', 'apng', 'webp', 'avif', 'svg',
-        'h264', 'mp4', 'm4v', 'ogv', 'webm', 'mov',
+        'gif', 'GIF', 'jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'apng', 'APNG', 'webp', 'WEBP', 'avif', 'AVIF', 'svg', 'SVG',
+        'h264', 'H264', 'mp4', 'MP4', 'm4v', 'M4V', 'ogv', 'OGV', 'webm', 'WEBM', 'mov', 'MOV',
     ]);
 });
 
