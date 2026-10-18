@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.8.0 - 2026-10-18
+
+- Add readable Glide cache paths
+
 ## 3.7.3 - 2026-09-06
 
 - Allow uppercase extensions in query scopes
