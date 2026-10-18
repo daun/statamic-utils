@@ -57,13 +57,14 @@ class GlideHash
 
     /**
      * Keep the value path-safe and lowercase: any other byte becomes `~` plus its hex code,
-     * like percent-encoding. Escaping `~` itself keeps distinct values distinct.
-     * e.g. `watermarks/Logo.png` → `watermarks~2f~4cogo.png`
+     * like percent-encoding. Escaping `~` itself keeps distinct values distinct, and escaping
+     * `_` keeps it reserved as the pair separator so names always split back unambiguously.
+     * e.g. `watermarks/Logo_2.png` → `watermarks~2f~4cogo~5f2.png`
      */
     private static function escape(string $value): string
     {
         return preg_replace_callback(
-            '/[^a-z0-9._\-]/',
+            '/[^a-z0-9.\-]/',
             fn (array $match) => sprintf('~%02x', ord($match[0])),
             $value,
         );

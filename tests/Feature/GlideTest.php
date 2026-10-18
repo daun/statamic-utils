@@ -13,9 +13,14 @@ test('glide hash keeps dashes, dots and negative numbers in values', function ()
         ->toBe('bri--10_fit-crop-48-63-1.5');
 });
 
-test('glide hash keeps underscores in values', function () {
+test('glide hash escapes underscores in values to keep the pair separator unambiguous', function () {
     expect(GlideHash::make('a.jpg', ['fit' => 'crop_focal', 'h' => 630, 'q' => 80, 'w' => 1200]))
-        ->toBe('fit-crop_focal_h-630_q-80_w-1200');
+        ->toBe('fit-crop~5ffocal_h-630_q-80_w-1200');
+});
+
+test('glide hash never confuses an underscore in a value with the pair separator', function () {
+    expect(GlideHash::make('a.jpg', ['fit' => 'a_w-400']))
+        ->not->toBe(GlideHash::make('a.jpg', ['fit' => 'a', 'w' => 400]));
 });
 
 test('glide hash skips nulls and casts booleans like http_build_query', function () {
@@ -31,13 +36,14 @@ test('glide hash escapes unsafe characters in values', function (string $value, 
     'hash sign' => ['#fff', 'mark-~23fff'],
     'space' => ['my logo.png', 'mark-my~20logo.png'],
     'tilde itself' => ['a~2f', 'mark-a~7e2f'],
+    'underscore' => ['my_logo.png', 'mark-my~5flogo.png'],
     'multibyte' => ['ü', 'mark-~c3~bc'],
 ]);
 
 test('glide hash escaping keeps distinct values distinct', function () {
     $names = array_map(
         fn (string $value) => GlideHash::make('a.jpg', ['mark' => $value]),
-        ['a/b', 'a~2fb', 'A', 'a', '~41', 'a b', 'a+b'],
+        ['a/b', 'a~2fb', 'A', 'a', '~41', 'a b', 'a+b', 'a_b', 'a~5fb'],
     );
 
     expect(array_unique($names))->toHaveCount(count($names));
