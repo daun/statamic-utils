@@ -2,6 +2,12 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.9.0 - 2026-10-18
+
+- Add `app:assets:prune` command for removing stale Vite assets in `public/vendor`
+- Fix origin candidates in `ConnectToOrigin` action
+- Fix `standard_ratio` modifier for numeric strings
+
 ## 3.8.0 - 2026-10-18
 
 - Add readable Glide cache paths
