@@ -393,6 +393,14 @@ test('standard_ratio maps to the closest standard ratio', function () {
     expect($m->index(1.4, []))->toBe(4 / 3);
 });
 
+test('standard_ratio accepts ratio strings and numeric strings', function () {
+    $m = new Modifiers\StandardRatio;
+
+    expect($m->index('16/9', []))->toBe(16 / 9);
+    expect($m->index('1.7', []))->toBe(16 / 9);
+    expect($m->index('1.4', []))->toBe(4 / 3);
+});
+
 test('standard_ratio can format the result with two decimals', function () {
     $m = new Modifiers\StandardRatio;
 

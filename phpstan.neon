@@ -5,3 +5,5 @@ parameters:
     paths:
         - src/
     level: 5
+    stubFiles:
+        - tests/stubs/statamic.stub

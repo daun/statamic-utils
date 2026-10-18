@@ -36,7 +36,7 @@ class RelationshipTitle
     {
         return match (true) {
             $item instanceof Entry => $item->value('title'),
-            $item instanceof Term => $item->value('title'),
+            $item instanceof Term => $item->inDefaultLocale()->value('title'),
             $item instanceof LocalizedTerm => $item->value('title'),
             default => $item->title ?? null,
         };

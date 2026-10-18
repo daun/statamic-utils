@@ -4,11 +4,15 @@ namespace Tests;
 
 use Daun\StatamicUtils\Modifiers;
 use Daun\StatamicUtils\Tags;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Statamic\Providers\StatamicServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
+    protected string $stachePath;
+
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
@@ -17,6 +21,16 @@ abstract class TestCase extends BaseTestCase
         $viewPaths[] = __DIR__.'/__fixtures__/views/';
 
         $app['config']->set('view.paths', $viewPaths);
+
+        // Keep content saved during tests out of the testbench skeleton.
+        $this->stachePath = sys_get_temp_dir().'/statamic-utils-stache-'.uniqid();
+
+        foreach ($app['config']->get('statamic.stache.stores') as $store => $config) {
+            if (is_string($config['directory'] ?? null)) {
+                $directory = $this->stachePath.Str::after($config['directory'], $app->basePath());
+                $app['config']->set("statamic.stache.stores.{$store}.directory", $directory);
+            }
+        }
     }
 
     protected function getPackageProviders($app)
@@ -38,6 +52,13 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         $this->registerAddon();
+    }
+
+    protected function tearDown(): void
+    {
+        File::deleteDirectory($this->stachePath);
+
+        parent::tearDown();
     }
 
     /**

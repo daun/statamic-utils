@@ -1,0 +1,50 @@
+<?php
+
+// Statamic's query builder contracts are empty marker interfaces, while every
+// implementation (Stache, Eloquent driver) exposes the same builder API. The
+// concrete base class can't be used as a @mixin since it implements these
+// interfaces itself, so the commonly used methods are declared here instead.
+// Stubs are validated without access to vendor classes: only reference core
+// types and classes stubbed by PHPStan or Larastan.
+
+namespace Statamic\Contracts\Query {
+    /**
+     * @method static where(string|array<mixed>|\Closure $column, mixed $operator = null, mixed $value = null, string $boolean = 'and')
+     * @method static orWhere(string|array<mixed>|\Closure $column, mixed $operator = null, mixed $value = null)
+     * @method static whereIn(string $column, array<mixed> $values, string $boolean = 'and')
+     * @method static whereNotIn(string $column, array<mixed> $values, string $boolean = 'and')
+     * @method static whereNull(string $column, string $boolean = 'and', bool $not = false)
+     * @method static whereNotNull(string $column, string $boolean = 'and')
+     * @method static select(string|array<string> $columns = ['*'])
+     * @method static orderBy(string $column, string $direction = 'asc')
+     * @method static limit(int $value)
+     * @method static offset(int $value)
+     * @method \Illuminate\Support\Collection<array-key, mixed> get(string|array<string> $columns = ['*'])
+     * @method mixed first()
+     * @method int count()
+     * @method bool exists()
+     * @method \Illuminate\Support\Collection<array-key, mixed> pluck(string $column, ?string $key = null)
+     */
+    interface Builder {}
+}
+
+namespace Statamic\Contracts\Entries {
+    /**
+     * @method static where(string|array<mixed>|\Closure $column, mixed $operator = null, mixed $value = null, string $boolean = 'and')
+     * @method static orWhere(string|array<mixed>|\Closure $column, mixed $operator = null, mixed $value = null)
+     * @method static whereIn(string $column, array<mixed> $values, string $boolean = 'and')
+     * @method static whereNotIn(string $column, array<mixed> $values, string $boolean = 'and')
+     * @method static whereNull(string $column, string $boolean = 'and', bool $not = false)
+     * @method static whereNotNull(string $column, string $boolean = 'and')
+     * @method static select(string|array<string> $columns = ['*'])
+     * @method static orderBy(string $column, string $direction = 'asc')
+     * @method static limit(int $value)
+     * @method static offset(int $value)
+     * @method \Illuminate\Support\Collection<array-key, mixed> get(string|array<string> $columns = ['*'])
+     * @method mixed first()
+     * @method int count()
+     * @method bool exists()
+     * @method \Illuminate\Support\Collection<array-key, mixed> pluck(string $column, ?string $key = null)
+     */
+    interface QueryBuilder {}
+}

@@ -51,13 +51,13 @@ class StandardRatio extends Modifier
 
     protected function resolveRatio(mixed $value): float
     {
-        if (is_string($value)) {
-            [$width, $height] = explode('/', $value);
+        if (is_string($value) && str_contains($value, '/')) {
+            [$width, $height] = array_map(floatval(...), explode('/', $value, 2));
 
-            return $width / $height;
-        } else {
-            return floatval($value);
+            return $height ? $width / $height : 0.0;
         }
+
+        return floatval($value);
     }
 
     public static function enable(bool $enabled): void

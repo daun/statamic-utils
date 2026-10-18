@@ -4,11 +4,12 @@ use Daun\StatamicUtils\Actions\ConnectToOrigin;
 use Daun\StatamicUtils\Actions\EditCollectionMount;
 use Daun\StatamicUtils\Actions\SetAssetAttribution;
 use Daun\StatamicUtils\Actions\ShowMountEntries;
-use Statamic\Contracts\Assets\Asset;
+use Statamic\Assets\Asset;
 use Statamic\Entries\Collection;
 use Statamic\Entries\Entry;
 use Statamic\Facades\Collection as Collections;
 use Statamic\Facades\Entry as Entries;
+use Statamic\Facades\Site as Sites;
 
 /*
 |--------------------------------------------------------------------------
@@ -135,6 +136,28 @@ test('connect to origin is hidden outside the edit form', function () {
     $action = (new ConnectToOrigin)->context(['view' => 'list', 'collection' => 'pages']);
 
     expect($action->visibleTo($entry))->toBeFalse();
+});
+
+test('connect to origin lists unconnected entries from other sites as origin candidates', function () {
+    config(['statamic.system.multisite' => true]);
+
+    Sites::setSites([
+        'en' => ['name' => 'English', 'url' => '/', 'locale' => 'en_US'],
+        'de' => ['name' => 'German', 'url' => '/de/', 'locale' => 'de_DE'],
+    ]);
+
+    Collections::make('pages')->sites(['en', 'de'])->save();
+
+    $current = tap(Entries::make()->collection('pages')->locale('en')->id('current')->data(['title' => 'Current']))->save();
+    Entries::make()->collection('pages')->locale('en')->id('same-site')->data(['title' => 'Same Site'])->save();
+    Entries::make()->collection('pages')->locale('de')->id('candidate')->data(['title' => 'Kandidat'])->save();
+
+    $action = (new ConnectToOrigin)->context(['view' => 'form', 'collection' => 'pages']);
+    $action->visibleTo($current);
+
+    $candidates = (fn () => $this->getOriginCandidates())->call($action);
+
+    expect($candidates->all())->toBe(['candidate' => '[DE] Kandidat']);
 });
 
 test('connect to origin throws when the chosen origin cannot be found', function () {

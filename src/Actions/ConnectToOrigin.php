@@ -110,13 +110,15 @@ class ConnectToOrigin extends Action
             ->map->origin()
             ->filter()
             ->map->id()
-            ->unique();
+            ->unique()
+            ->values()
+            ->all();
 
         return Entries::query()
             ->where('collection', $collection)
             ->where('origin', null)
             ->whereNotIn('id', $existingOrigins)
-            ->whereNot('site', $currentLocale)
+            ->where('site', '!=', $currentLocale)
             ->orderBy('title')
             ->get()
             ->sortBy(fn ($entry) => $entry->locale())

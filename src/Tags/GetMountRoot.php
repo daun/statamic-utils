@@ -13,7 +13,7 @@ class GetMountRoot extends Tags
     /**
      * The {{ get_mount_root }} tag.
      *
-     * @return string|array
+     * @return \Statamic\Contracts\Entries\Entry|null
      */
     public function index()
     {

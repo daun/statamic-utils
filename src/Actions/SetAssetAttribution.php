@@ -3,7 +3,7 @@
 namespace Daun\StatamicUtils\Actions;
 
 use Statamic\Actions\Action;
-use Statamic\Contracts\Assets\Asset;
+use Statamic\Assets\Asset;
 
 class SetAssetAttribution extends Action
 {

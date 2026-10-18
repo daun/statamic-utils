@@ -4,6 +4,8 @@ use Daun\StatamicUtils\Search\Filters;
 use Daun\StatamicUtils\Search\Transformers;
 use Statamic\Entries\Entry;
 use Statamic\Facades\Site as Sites;
+use Statamic\Facades\Taxonomy;
+use Statamic\Facades\Term;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,6 +141,13 @@ test('the RelationshipTitle transformer reads the title of an Entry', function (
     $entry->shouldReceive('value')->with('title')->andReturn('Entry Title');
 
     expect((new Transformers\RelationshipTitle)->title($entry))->toBe('Entry Title');
+});
+
+test('the RelationshipTitle transformer reads the title of a Term in its default locale', function () {
+    Taxonomy::make('tags')->save();
+    $term = Term::make('news')->taxonomy('tags')->data(['title' => 'News']);
+
+    expect((new Transformers\RelationshipTitle)->title($term))->toBe('News');
 });
 
 /*

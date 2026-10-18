@@ -19,13 +19,13 @@ class Random extends Tags
     /**
      * The {{ random:int }} tag.
      *
-     * @return string|array
+     * @return int
      */
     public function int()
     {
         return random_int(
-            $this->params->get('min', 1),
-            $this->params->get('max', PHP_INT_MAX)
+            $this->params->int('min', 1),
+            $this->params->int('max', PHP_INT_MAX)
         );
     }
 }
