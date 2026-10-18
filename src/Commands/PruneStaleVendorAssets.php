@@ -3,6 +3,7 @@
 namespace Daun\StatamicUtils\Commands;
 
 use Composer\InstalledVersions;
+use Daun\StatamicUtils\Commands\Concerns\RegistersCommand;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -14,10 +15,12 @@ use Symfony\Component\Finder\SplFileInfo;
  * addon rebuilds. Statamic's AddonServiceProvider::registerVite() always
  * publishes into public_path('vendor'), so that's the only root scanned.
  */
-#[Signature('app:assets:prune {--force : Delete stale assets instead of running a dry run}')]
+#[Signature('utils:assets:prune {--force : Delete stale assets instead of running a dry run}')]
 #[Description('Report and optionally delete stale Vite vendor assets published under public/vendor.')]
 class PruneStaleVendorAssets extends Command
 {
+    use RegistersCommand;
+
     /**
      * Filenames that are always preserved, regardless of whether they
      * follow the hashed asset naming convention.
@@ -122,7 +125,7 @@ class PruneStaleVendorAssets extends Command
             $this->components->warn(
                 "Dry run: found {$totalStale} stale asset(s) across {$packageCount} package(s). No files were deleted."
             );
-            $this->line('Rerun with --force to delete them: php artisan app:assets:prune --force');
+            $this->line('Rerun with --force to delete them: php artisan utils:assets:prune --force');
         }
 
         return $this->failed ? self::FAILURE : self::SUCCESS;

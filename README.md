@@ -12,7 +12,7 @@ composer require daun/statamic-utils
 
 ## Registration
 
-Modifiers, Tags, Scopes, etc. need to be registered in your app's service provider.
+Modifiers, Tags, Scopes, Commands, etc. need to be registered in your app's service provider.
 
 ```php
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \Daun\StatamicUtils\Modifiers\ToIterable::register();
         \Daun\StatamicUtils\Scopes\Image::register();
+        \Daun\StatamicUtils\Commands\UpdateEntryUris::register();
     }
 }
 ```

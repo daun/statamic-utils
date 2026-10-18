@@ -2,16 +2,19 @@
 
 namespace Daun\StatamicUtils\Commands;
 
+use Daun\StatamicUtils\Commands\Concerns\RegistersCommand;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Statamic\Facades\Collection as Collections;
 use Statamic\Facades\Entry as Entries;
 
-#[Signature('app:update-entry-uris')]
+#[Signature('utils:update-entry-uris')]
 #[Description('Update URIs for all entries in all collections')]
 class UpdateEntryUris extends Command
 {
+    use RegistersCommand;
+
     /**
      * Execute the console command.
      */

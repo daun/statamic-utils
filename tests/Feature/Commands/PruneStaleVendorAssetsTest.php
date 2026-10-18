@@ -1,7 +1,6 @@
 <?php
 
 use Daun\StatamicUtils\Commands\PruneStaleVendorAssets;
-use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Console\Command\Command;
 
@@ -11,7 +10,7 @@ beforeEach(function () {
     File::ensureDirectoryExists($this->publicPath);
 
     $this->app->usePublicPath($this->publicPath);
-    $this->app->make(Kernel::class)->registerCommand(new PruneStaleVendorAssets);
+    PruneStaleVendorAssets::register();
 });
 
 afterEach(function () {
@@ -41,7 +40,7 @@ function assertKept(string $relativePath): void
 }
 
 test('reports success when vendor root is missing', function () {
-    $this->artisan('app:assets:prune')
+    $this->artisan('utils:assets:prune')
         ->assertExitCode(Command::SUCCESS)
         ->expectsOutputToContain('Nothing to prune');
 });
@@ -49,7 +48,7 @@ test('reports success when vendor root is missing', function () {
 test('reports success when no manifests exist', function () {
     File::ensureDirectoryExists(vendorPath());
 
-    $this->artisan('app:assets:prune')
+    $this->artisan('utils:assets:prune')
         ->assertExitCode(Command::SUCCESS)
         ->expectsOutputToContain('No Vite manifests found');
 });
@@ -61,11 +60,11 @@ test('dry run leaves all files and reports keep and delete', function () {
     writeAsset('demo/build/assets/app-AbCdEfGh.js', 'current');
     writeAsset('demo/build/assets/app-11112222.js', 'stale');
 
-    $this->artisan('app:assets:prune')
+    $this->artisan('utils:assets:prune')
         ->assertExitCode(Command::SUCCESS)
         ->expectsOutputToContain('KEEP    assets/app-AbCdEfGh.js')
         ->expectsOutputToContain('DELETE  assets/app-11112222.js')
-        ->expectsOutputToContain('php artisan app:assets:prune --force');
+        ->expectsOutputToContain('php artisan utils:assets:prune --force');
 
     // Dry run: nothing was actually deleted.
     assertKept('demo/build/assets/app-AbCdEfGh.js');
@@ -81,7 +80,7 @@ test('force deletes stale hashed asset but preserves current and manual files', 
     writeAsset('demo/build/assets/logo.png', 'manual asset without a hash');
     writeAsset('demo/build/assets/.DS_Store', 'finder junk');
 
-    $this->artisan('app:assets:prune', ['--force' => true])
+    $this->artisan('utils:assets:prune', ['--force' => true])
         ->assertExitCode(Command::SUCCESS)
         ->expectsOutputToContain('DELETED assets/app-11112222.js');
 
@@ -99,7 +98,7 @@ test('fully orphaned hashed trunk is reported and deleted', function () {
     writeAsset('demo/build/assets/app-AbCdEfGh.js', 'current');
     writeAsset('demo/build/assets/orphan-99998888.js', 'orphaned, trunk never referenced');
 
-    $this->artisan('app:assets:prune', ['--force' => true])
+    $this->artisan('utils:assets:prune', ['--force' => true])
         ->assertExitCode(Command::SUCCESS)
         ->expectsOutputToContain('KEEP — (not present in manifest)')
         ->expectsOutputToContain('DELETED assets/orphan-99998888.js');
@@ -122,7 +121,7 @@ test('css and assets manifest arrays are kept', function () {
     writeAsset('demo/build/assets/logo-DdDdDdDd.png', 'current image');
     writeAsset('demo/build/assets/app-99990000.css', 'stale css');
 
-    $this->artisan('app:assets:prune', ['--force' => true])->assertExitCode(Command::SUCCESS);
+    $this->artisan('utils:assets:prune', ['--force' => true])->assertExitCode(Command::SUCCESS);
 
     assertKept('demo/build/assets/app-AbCdEfGh.js');
     assertKept('demo/build/assets/app-CcCcCcCc.css');
@@ -139,7 +138,7 @@ test('current sourcemap is kept and stale sourcemap is deleted', function () {
     writeAsset('demo/build/assets/app-11112222.js', 'stale js');
     writeAsset('demo/build/assets/app-11112222.js.map', 'stale sourcemap');
 
-    $this->artisan('app:assets:prune', ['--force' => true])->assertExitCode(Command::SUCCESS);
+    $this->artisan('utils:assets:prune', ['--force' => true])->assertExitCode(Command::SUCCESS);
 
     assertKept('demo/build/assets/app-AbCdEfGh.js');
     assertKept('demo/build/assets/app-AbCdEfGh.js.map');
@@ -154,7 +153,7 @@ test('modern dot vite manifest layout resolves output root correctly', function 
     writeAsset('demo/build/assets/app-AbCdEfGh.js', 'current');
     writeAsset('demo/build/assets/app-11112222.js', 'stale');
 
-    $this->artisan('app:assets:prune', ['--force' => true])
+    $this->artisan('utils:assets:prune', ['--force' => true])
         ->assertExitCode(Command::SUCCESS)
         ->expectsOutputToContain('[.vite/manifest.json]');
 
@@ -173,7 +172,7 @@ test('multiple manifests for the same output root are skipped', function () {
     writeAsset('demo/build/assets/app-AbCdEfGh.js', 'current');
     writeAsset('demo/build/assets/app-11112222.js', 'stale');
 
-    $this->artisan('app:assets:prune', ['--force' => true])
+    $this->artisan('utils:assets:prune', ['--force' => true])
         ->assertExitCode(Command::FAILURE)
         ->expectsOutputToContain('Multiple Vite manifests share output root');
 
@@ -187,7 +186,7 @@ test('malformed or empty manifest returns failure and deletes nothing', function
     writeAsset('broken/build/assets/app-11112222.js', 'untouched');
     writeAsset('empty/build/assets/app-11112222.js', 'untouched');
 
-    $this->artisan('app:assets:prune', ['--force' => true])
+    $this->artisan('utils:assets:prune', ['--force' => true])
         ->assertExitCode(Command::FAILURE)
         ->expectsOutputToContain('Malformed or unsafe manifest');
 
@@ -207,7 +206,7 @@ test('manifest with unsafe absolute path is rejected and valid manifests still r
     writeAsset('safe/build/assets/app-AbCdEfGh.js', 'current');
     writeAsset('safe/build/assets/app-11112222.js', 'stale');
 
-    $this->artisan('app:assets:prune', ['--force' => true])
+    $this->artisan('utils:assets:prune', ['--force' => true])
         ->assertExitCode(Command::FAILURE)
         ->expectsOutputToContain('Malformed or unsafe manifest');
 
