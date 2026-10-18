@@ -2,6 +2,11 @@
 
 All notable changes to this package will be documented in this file.
 
+## 4.0.0 - 2026-10-18
+
+- **Breaking:** Rename command prefix from `app:` to `utils:` (`utils:update-entry-uris`, `utils:assets:prune`)
+- Add static `register()` method to commands
+
 ## 3.9.1 - 2026-10-18
 
 - Fix ambiguous Glide cache paths by escaping underscores in param values
