@@ -31,6 +31,13 @@ abstract class TestCase extends BaseTestCase
                 $app['config']->set("statamic.stache.stores.{$store}.directory", $directory);
             }
         }
+
+        // Saving content builds the search indexes, including the built-in `cp`
+        // index which also indexes users. Store users as files so no database
+        // table is needed, and keep indexes per-test so results don't depend on
+        // leftovers in the testbench skeleton.
+        $app['config']->set('statamic.users.repository', 'file');
+        $app['config']->set('statamic.search.drivers.local.path', $this->stachePath.'/search');
     }
 
     protected function getPackageProviders($app)
