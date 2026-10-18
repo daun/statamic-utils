@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 3.9.1 - 2026-10-18
+
+- Fix ambiguous Glide cache paths by escaping underscores in param values
+
 ## 3.9.0 - 2026-10-18
 
 - Add `app:assets:prune` command for removing stale Vite assets in `public/vendor`
