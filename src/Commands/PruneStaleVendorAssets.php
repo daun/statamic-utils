@@ -205,6 +205,7 @@ class PruneStaleVendorAssets extends Command
         }
 
         $candidates = $this->collectCandidates($outputRoot);
+        $keepSet = $this->withReferencedAssets($outputRoot, $keepSet, $candidates);
         $families = $this->groupIntoFamilies($candidates, $keepSet);
 
         $affected = array_filter($families, fn (array $family) => $family['stale'] !== []);
@@ -328,6 +329,66 @@ class PruneStaleVendorAssets extends Command
         }
 
         return $keep;
+    }
+
+    /**
+     * Extend the keep set with hashed assets that kept JS or CSS files refer to,
+     * recursively. Some chunks aren't in the manifest, e.g. a worker loaded via
+     * `new URL('pdf.worker-[hash].js', import.meta.url)` from a stub that is.
+     * Vite writes hashed file names into its output as literal strings, so a
+     * reference is found by searching for the file's name.
+     *
+     * @param  array<string, true>  $keepSet
+     * @param  list<array{relative: string, directory: string, trunk: string, ext: string, isMap: bool}>  $candidates
+     * @return array<string, true>
+     */
+    private function withReferencedAssets(string $outputRoot, array $keepSet, array $candidates): array
+    {
+        // Index by `[hash].ext` to find references without searching for every name
+        $bySuffix = [];
+
+        foreach ($candidates as $candidate) {
+            if ($candidate['isMap'] || isset($keepSet[$candidate['relative']])) {
+                continue;
+            }
+
+            $basename = basename($candidate['relative']);
+            $suffix = substr($basename, strlen($candidate['trunk']) + 1);
+            $bySuffix[$suffix][$candidate['relative']] = $basename;
+        }
+
+        $queue = array_keys($keepSet);
+
+        while ($bySuffix !== [] && ($relative = array_pop($queue)) !== null) {
+            if (! preg_match('/\.(?:m?js|css)$/i', $relative)) {
+                continue;
+            }
+
+            $contents = @file_get_contents($outputRoot.DIRECTORY_SEPARATOR.$relative);
+
+            // Lookahead, so overlapping hash-like sequences are all considered
+            if ($contents === false || ! preg_match_all('/(?=-([A-Za-z0-9_-]{8}\.[A-Za-z0-9]+))/', $contents, $matches)) {
+                continue;
+            }
+
+            foreach (array_unique($matches[1]) as $suffix) {
+                foreach ($bySuffix[$suffix] ?? [] as $referenced => $basename) {
+                    if (! str_contains($contents, $basename)) {
+                        continue;
+                    }
+
+                    $keepSet[$referenced] = true;
+                    $queue[] = $referenced;
+                    unset($bySuffix[$suffix][$referenced]);
+                }
+
+                if (($bySuffix[$suffix] ?? null) === []) {
+                    unset($bySuffix[$suffix]);
+                }
+            }
+        }
+
+        return $keepSet;
     }
 
     private function normalizeManifestPath(string $path): ?string

@@ -146,6 +146,58 @@ test('current sourcemap is kept and stale sourcemap is deleted', function () {
     expect(vendorPath('demo/build/assets/app-11112222.js.map'))->not->toBeFile();
 });
 
+test('assets referenced from kept files are kept', function () {
+    // Mirrors Vite's `?worker&url` output: the manifest lists a stub that points at the real worker
+    writeManifest('demo/build/manifest.json', [
+        'resources/js/app.js' => ['file' => 'assets/app-AbCdEfGh.js', 'isEntry' => true],
+        'node_modules/pdfjs-dist/build/pdf.worker.min.mjs?worker&url' => [
+            'file' => 'assets/pdf.worker.min-BYRQ8YMk.js',
+            'isDynamicEntry' => true,
+        ],
+    ]);
+    writeAsset('demo/build/assets/app-AbCdEfGh.js', 'current');
+    writeAsset('demo/build/assets/pdf.worker.min-BYRQ8YMk.js', 'var e=``+new URL(`pdf.worker.min-B4E34YdZ.js`,import.meta.url).href;export{e as default};');
+    writeAsset('demo/build/assets/pdf.worker.min-B4E34YdZ.js', 'worker');
+    writeAsset('demo/build/assets/pdf.worker.min-B4E34YdZ.js.map', 'worker sourcemap');
+    writeAsset('demo/build/assets/pdf.worker.min-DIjIIhLI.js', 'stale worker');
+
+    $this->artisan('utils:assets:prune', ['--force' => true])
+        ->assertExitCode(Command::SUCCESS)
+        ->expectsOutputToContain('DELETED assets/pdf.worker.min-DIjIIhLI.js');
+
+    assertKept('demo/build/assets/pdf.worker.min-BYRQ8YMk.js');
+    assertKept('demo/build/assets/pdf.worker.min-B4E34YdZ.js');
+    assertKept('demo/build/assets/pdf.worker.min-B4E34YdZ.js.map');
+    expect(vendorPath('demo/build/assets/pdf.worker.min-DIjIIhLI.js'))->not->toBeFile();
+});
+
+test('referenced assets are followed recursively from js and css files only', function () {
+    writeManifest('demo/build/manifest.json', [
+        'resources/js/app.js' => [
+            'file' => 'assets/app-AbCdEfGh.js',
+            'isEntry' => true,
+            'css' => ['assets/app-CcCcCcCc.css'],
+            'assets' => ['assets/notes-EeEeEeEe.txt'],
+        ],
+    ]);
+    writeAsset('demo/build/assets/app-AbCdEfGh.js', 'import("./chunk-11-22-33.js");new URL("./worker-1A2b3C4d.js",import.meta.url)');
+    writeAsset('demo/build/assets/worker-1A2b3C4d.js', 'importScripts("nested-5E6f7G8h.js")');
+    writeAsset('demo/build/assets/nested-5E6f7G8h.js', 'nested');
+    writeAsset('demo/build/assets/app-CcCcCcCc.css', '@font-face{src:url(./font-9I0j1K2l.woff2)}');
+    writeAsset('demo/build/assets/font-9I0j1K2l.woff2', 'font');
+    writeAsset('demo/build/assets/notes-EeEeEeEe.txt', 'not scanned: orphan-99998888.js');
+    writeAsset('demo/build/assets/orphan-99998888.js', 'only mentioned in a non-script file');
+    writeAsset('demo/build/assets/worker-11112222.js', 'stale worker');
+
+    $this->artisan('utils:assets:prune', ['--force' => true])->assertExitCode(Command::SUCCESS);
+
+    assertKept('demo/build/assets/worker-1A2b3C4d.js');
+    assertKept('demo/build/assets/nested-5E6f7G8h.js');
+    assertKept('demo/build/assets/font-9I0j1K2l.woff2');
+    expect(vendorPath('demo/build/assets/orphan-99998888.js'))->not->toBeFile();
+    expect(vendorPath('demo/build/assets/worker-11112222.js'))->not->toBeFile();
+});
+
 test('modern dot vite manifest layout resolves output root correctly', function () {
     writeManifest('demo/build/.vite/manifest.json', [
         'resources/js/app.js' => ['file' => 'assets/app-AbCdEfGh.js', 'isEntry' => true],

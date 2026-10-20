@@ -2,6 +2,10 @@
 
 All notable changes to this package will be documented in this file.
 
+## 4.0.1 - 2026-10-20
+
+- Fix `utils:assets:prune` deleting assets that are only referenced from other assets, e.g. Vite workers
+
 ## 4.0.0 - 2026-10-18
 
 - **Breaking:** Rename command prefix from `app:` to `utils:` (`utils:update-entry-uris`, `utils:assets:prune`)
