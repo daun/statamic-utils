@@ -7,6 +7,8 @@ use Statamic\Assets\Asset;
 
 class SetAssetAttribution extends Action
 {
+    protected $icon = 'form-text-field';
+
     protected string $attributionField = 'attribution';
 
     public function buttonText()

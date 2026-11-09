@@ -10,6 +10,8 @@ class ShowMountEntries extends Action
 {
     protected $confirm = false;
 
+    protected $icon = 'tree-expand';
+
     public static function title()
     {
         return __('Show Entries');

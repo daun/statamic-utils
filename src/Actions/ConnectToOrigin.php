@@ -12,6 +12,8 @@ class ConnectToOrigin extends Action
 
     protected ?Entry $updatedEntry = null;
 
+    protected $icon = 'synced';
+
     public static function title()
     {
         return __('Connect to Origin');

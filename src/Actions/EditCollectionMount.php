@@ -9,6 +9,8 @@ class EditCollectionMount extends Action
 {
     protected $confirm = false;
 
+    protected $icon = 'edit';
+
     public static function title()
     {
         return __('Edit Mount Page');
